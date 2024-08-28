@@ -1,0 +1,39 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>Duoc UC</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="login-content">
+  <!-- Encabezado con el logo -->
+  <div class="login-header">
+    <!--<img src="assets/imgs/logo.png" alt="Logo" class="logo" />-->
+    <h1>Bienvenido</h1>
+    <p>Inicia sesión para continuar</p>
+  </div>
+
+  <!-- Formulario de Login -->
+  <form [formGroup]="formulario" class="login-form">
+    <ion-item class="input-item">
+      <ion-icon name="person-outline" slot="start"></ion-icon>
+      <ion-label position="floating">Nombre</ion-label>
+      <ion-input formControlName="usuario"></ion-input>
+    </ion-item>
+    <ion-item class="input-item">
+      <ion-icon name="lock-closed-outline" slot="start"></ion-icon>
+      <ion-label position="floating">Contraseña</ion-label>
+      <ion-input formControlName="password" type="password"></ion-input>
+    </ion-item>
+
+    <!-- Botón de Inicio de Sesión 
+    <ion-button expand="block" class="login-button" color="primary" (click)="onLogin()">
+      Iniciar Sesión
+    </ion-button>-->
+
+    <!-- Enlaces
+    <div class="login-links">
+      <a routerLink="/forgot-password">¿Olvidaste tu contraseña?</a>
+      <a routerLink="/register">¿No tienes una cuenta? Regístrate</a>
+    </div>-->
+  </form>
+</ion-content>

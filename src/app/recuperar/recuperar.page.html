@@ -1,0 +1,35 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>Duoc UC</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Nuevo usuario</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content >
+  <ion-card>
+    <ion-card-content>
+      <form [formGroup]="formulario"(keyup.enter)="restablecer()">
+        <ion-item>
+          <ion-icon name="person-circle-outline" slot="start"></ion-icon>
+          <ion-label position="floating">Nombre Usuario</ion-label>
+          <ion-input formControlName="usuario" type="text"></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-icon name="lock-closed-outline" slot="start"></ion-icon>
+          <ion-label position="floating">Nueva Contraseña</ion-label>
+          <ion-input formControlName="password" type="password"></ion-input>
+        </ion-item>
+
+        <ion-button (click)="restablecer()" expand="full">
+          Crear nuevo usuario
+        </ion-button>
+      </form>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

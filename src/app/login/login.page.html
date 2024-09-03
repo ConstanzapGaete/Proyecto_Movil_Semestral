@@ -1,39 +1,40 @@
 <ion-header [translucent]="true">
-  <ion-toolbar>
+  <ion-toolbar style="--background: rgb(33, 33, 160); --color: #ebd300f8;">
     <ion-title>Duoc UC</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true" class="login-content">
-  <!-- Encabezado con el logo -->
-  <div class="login-header">
-    <!--<img src="assets/imgs/logo.png" alt="Logo" class="logo" />-->
-    <h1>Bienvenido</h1>
-    <p>Inicia sesión para continuar</p>
+<ion-content [fullscreen]="true" class="login-content" style="display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 16px; height: 100%;">
+  
+  <div class="login-header" style="margin-bottom: 20px;">
+    <img src="assets/img/Registrapp.png" alt="Logo" class="logo" style="width: 300px; height: auto; margin-bottom: 10px;">
+    <h1 style="margin: 0;">Bienvenido</h1>
+    <p style="margin: 0;">Inicia sesión para continuar</p>
   </div>
-
-  <!-- Formulario de Login -->
-  <form [formGroup]="formulario" class="login-form">
-    <ion-item class="input-item">
+ 
+  <form [formGroup]="formulario" class="login-form" style="width: 100%; max-width: 400px;">
+    <ion-item class="input-item" style="width: 100%; margin-bottom: 5px;">
       <ion-icon name="person-outline" slot="start"></ion-icon>
       <ion-label position="floating">Nombre</ion-label>
       <ion-input formControlName="usuario"></ion-input>
     </ion-item>
-    <ion-item class="input-item">
+    <ion-item class="input-item" style="width: 100%; margin-bottom: 20px;">
       <ion-icon name="lock-closed-outline" slot="start"></ion-icon>
       <ion-label position="floating">Contraseña</ion-label>
       <ion-input formControlName="password" type="password"></ion-input>
     </ion-item>
 
-    <!-- Botón de Inicio de Sesión 
-    <ion-button expand="block" class="login-button" color="primary" (click)="onLogin()">
+  
+    <ion-button expand="block" class="login-button" color="primary"  style="width: 100%; margin-top: 20px;"
+      (click)="ingresar()">
       Iniciar Sesión
-    </ion-button>-->
+    </ion-button>
 
-    <!-- Enlaces
-    <div class="login-links">
-      <a routerLink="/forgot-password">¿Olvidaste tu contraseña?</a>
-      <a routerLink="/register">¿No tienes una cuenta? Regístrate</a>
-    </div>-->
+    
+    <div class="login-links" style="margin-top: 10px; text-align: center;">
+      <a routerLink="/pass">¿Olvidaste tu contraseña?</a>
+    </div>
   </form>
 </ion-content>
+
+

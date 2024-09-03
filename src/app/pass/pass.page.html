@@ -1,0 +1,36 @@
+<ion-header [translucent]="true">
+  <ion-toolbar style="--background: rgb(33, 33, 160); --color: #ebd300f8;">
+    <ion-title>Cambiar Contraseña</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="cambiar-content" style="display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 16px; height: 100%;">
+  
+  <div class="cambiar-header" style="margin-bottom: 20px;">
+    <h2 style="margin: 0;">Cambiar Contraseña</h2>
+    <p style="margin: 0;">Ingresa tu nombre de usuario y la nueva contraseña.</p>
+  </div>
+
+  <form [formGroup]="formulario" class="cambiar-form" style="width: 100%; max-width: 400px;">
+    <ion-item class="input-item" style="width: 100%; margin-bottom: 20px;">
+      <ion-icon name="person-outline" slot="start"></ion-icon>
+      <ion-label position="floating">Nombre de Usuario</ion-label>
+      <ion-input formControlName="usuario" type="text"></ion-input>
+    </ion-item>
+
+    <ion-item class="input-item" style="width: 100%; margin-bottom: 20px;">
+      <ion-icon name="lock-closed-outline" slot="start"></ion-icon>
+      <ion-label position="floating">Nueva Contraseña</ion-label>
+      <ion-input formControlName="nuevaPassword" type="password"></ion-input>
+    </ion-item>
+
+    <ion-button expand="block" class="cambiar-button" color="primary" style="width: 100%; margin-top: 20px;"
+      (click)="cambiarContrasena()">
+      Cambiar Contraseña
+    </ion-button>
+
+    <div class="cambiar-links" style="margin-top: 10px; text-align: center;">
+      <a routerLink="/login">Volver al Inicio de Sesión</a>
+    </div>
+  </form>
+</ion-content>

@@ -21,8 +21,8 @@ export class HomePage implements OnInit {
   }
 
   cerrarSesion() {
-    // Eliminar la sesión del usuario (esto puede variar según tu lógica de autenticación)
-    localStorage.removeItem('ingresado'); // Ejemplo: eliminar el indicador de sesión iniciada
-    this.navCtrl.navigateRoot('/login'); // Redirigir a la página de login
+    
+    localStorage.removeItem('ingresado'); 
+    this.navCtrl.navigateRoot('/login'); 
   }
 }

@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import {FormGroup,FormControl,Validators,FormBuilder } from '@angular/forms';
+import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { AlertController } from '@ionic/angular';
 import { Router } from '@angular/router';
+import { ServicioAppService } from 'src/app/servicio-app.service'; 
 
 @Component({
   selector: 'app-recuperar',
@@ -11,18 +12,22 @@ import { Router } from '@angular/router';
 export class RecuperarPage implements OnInit {
   formulario: FormGroup;
 
-  constructor(public f: FormBuilder, public alertController: AlertController,private router: Router) {
+  constructor(
+    public f: FormBuilder,
+    public alertController: AlertController,
+    private router: Router,
+    private servicioAppService: ServicioAppService 
+  ) {
     this.formulario = this.f.group({
-      'usuario': new FormControl("",Validators.required),
-      'password': new FormControl("",Validators.required)
+      'usuario': new FormControl("", Validators.required),
+      'password': new FormControl("", Validators.required)
     });
   }
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
   async restablecer() {
-    var f = this.formulario.value;
+    const f = this.formulario.value;
 
     if (this.formulario.invalid) {
       const alert = await this.alertController.create({
@@ -35,15 +40,20 @@ export class RecuperarPage implements OnInit {
       return;
     }
 
+    // Verifica si el usuario ya existe
+    if (this.servicioAppService.verificarUsuarioExistente(f.usuario)) {
+      const alert = await this.alertController.create({
+        header: 'Usuario existente',
+        message: 'El usuario ya existe, elige otro nombre de usuario.',
+        buttons: ['Aceptar']
+      });
 
- 
-    var user = {
-      usuario: f.usuario,  
-      password: f.password
-    };
+      await alert.present();
+      return;
+    }
 
-
-    localStorage.setItem('usuario', JSON.stringify(user));
+    
+    this.servicioAppService.agregarUsuario(f.usuario, f.password);
 
     const alert = await this.alertController.create({
       header: 'Usuario creado',

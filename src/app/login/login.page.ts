@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { AlertController, NavController } from '@ionic/angular';
 import { Router } from '@angular/router';
+import { ServicioAppService } from 'src/app/servicio-app.service'; 
 
 @Component({
   selector: 'app-login',
@@ -15,38 +16,30 @@ export class LoginPage implements OnInit {
   constructor(
     public f: FormBuilder,
     public alertController: AlertController,
-    private router: Router, 
-    public navctr: NavController
-  ) { 
+    private router: Router,
+    public navctr: NavController,
+    private servicioAppService: ServicioAppService 
+  ) {
     this.formulario = this.f.group({
       'usuario': new FormControl("", Validators.required),
       'password': new FormControl("", Validators.required)
     });
   }
 
-  ngOnInit() {}
+  ngOnInit() { }
 
   async ingresar() {
-    if (!this.formulario.valid) {  // Validar si el formulario está completo
+    if (!this.formulario.valid) {
       await this.mostrarAlerta('Campos Vacíos', 'Por favor, llena todos los campos.');
-      return;  // Detener ejecución si el formulario no es válido
+      return;
     }
 
     const formulariologin = this.formulario.value;
-    const storedUser = localStorage.getItem('usuario');
-  
-    if (storedUser) {
-      console.log('Stored User:', storedUser);
-      const user = JSON.parse(storedUser);
-  
-      console.log('Stored User Object:', user);
-      
-      if (user.usuario.trim().toLowerCase() === formulariologin.usuario.trim().toLowerCase() &&
-          user.password === formulariologin.password) {
-        localStorage.setItem('ingresado', 'true');
+
+    if (this.servicioAppService.hayUsuariosRegistrados()) {
+      if (this.servicioAppService.autenticarUsuario(formulariologin.usuario, formulariologin.password)) {
         this.navctr.navigateRoot('home');
       } else {
-        console.log('Datos incorrectos, mostrando alerta.');
         await this.mostrarAlerta('Datos incorrectos', 'Los datos que ingresaste son incorrectos. >:c');
       }
     } else {
@@ -60,7 +53,7 @@ export class LoginPage implements OnInit {
       message: message,
       buttons: ['Aceptar']
     });
-  
+
     await alert.present();
   }
 }

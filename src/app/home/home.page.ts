@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NavController } from '@ionic/angular';
+import { ServicioAppService } from '../servicio-app.service';  
 
 @Component({
   selector: 'app-home',
@@ -9,20 +10,23 @@ import { NavController } from '@ionic/angular';
 export class HomePage implements OnInit {
   nombreUsuario: string = '';
 
-  constructor(private navCtrl: NavController) {}
+  constructor(
+    private navCtrl: NavController,
+    private servicioAppService: ServicioAppService  
+  ) {}
 
   ngOnInit() {
-    // Recuperar el nombre del usuario de localStorage
-    const storedUser = localStorage.getItem('usuario');
-    if (storedUser) {
-      const user = JSON.parse(storedUser);
-      this.nombreUsuario = user.usuario; // Asignar el nombre del usuario
+    const usuarioAutenticado = this.servicioAppService.obtenerUsuarioAutenticado();
+    if (usuarioAutenticado) {
+      this.nombreUsuario = usuarioAutenticado.usuario; 
+    } else {
+      this.nombreUsuario = 'Invitado'; 
     }
+    console.log('Usuarios registrados:', this.servicioAppService.obtenerUsuarios());    
   }
 
   cerrarSesion() {
-    
-    localStorage.removeItem('ingresado'); 
-    this.navCtrl.navigateRoot('/login'); 
+    this.servicioAppService.cerrarSesion();
+    this.navCtrl.navigateRoot('/login');  
   }
 }

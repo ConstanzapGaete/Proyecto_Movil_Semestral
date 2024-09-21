@@ -1,3 +1,10 @@
+ion-header {
+  ion-toolbar {
+    --background: #014ba0;
+    --color: #ebd300f8;
+  }
+}
+
 ion-content {
   --background: #f4f5f8;
 }
@@ -58,50 +65,6 @@ ion-input {
   }
 }
 
-ion-header {
-  background: #014ba0;
-
-  ion-toolbar {
-    --background: transparent;
-    --border-color: transparent;
-  }
-
-  .header-content {
-    display: flex;
-    align-items: center;
-    padding: 10px 16px;
-  }
-
-  .header-logo {
-    width: 40px;
-    height: 40px;
-    margin-right: 12px;
-  }
-
-  ion-title {
-    color: #ebd300f8;
-    font-weight: bold;
-    font-size: 20px;
-  }
-}
-
-@media (min-width: 768px) {
-  ion-header {
-    .header-content {
-      justify-content: center;
-    }
-
-    .header-logo {
-      width: 50px;
-      height: 50px;
-    }
-
-    ion-title {
-      font-size: 24px;
-    }
-  }
-}
-
 ion-footer {
   background: #014ba0;
   padding: 20px 0;
@@ -110,7 +73,6 @@ ion-footer {
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 0 16px;
   }
 
   .footer-links {
@@ -124,11 +86,6 @@ ion-footer {
       text-decoration: none;
       margin: 0 10px;
       font-size: 14px;
-      transition: opacity 0.3s ease;
-
-      &:hover {
-        opacity: 0.8;
-      }
     }
   }
 
@@ -141,12 +98,6 @@ ion-footer {
       font-size: 24px;
       color: #ebd300f8;
       margin: 0 10px;
-      cursor: pointer;
-      transition: opacity 0.3s ease;
-
-      &:hover {
-        opacity: 0.8;
-      }
     }
   }
 
@@ -158,17 +109,7 @@ ion-footer {
 }
 
 @media (min-width: 768px) {
-  ion-footer {
-    .footer-links a {
-      font-size: 16px;
-    }
-
-    .social-icons ion-icon {
-      font-size: 28px;
-    }
-
-    .copyright {
-      font-size: 14px;
-    }
+  .change-password-container {
+    max-width: 500px;
   }
 }

@@ -1,8 +1,34 @@
+<<<<<<< Updated upstream
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-title>
       Blank
     </ion-title>
+=======
+<ion-menu side="start" menuId="first" contentId="main-content">
+  <ion-header>
+    <ion-toolbar color="primary">
+      <ion-title>Menú</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-content>
+    <ion-list>
+      <ion-item button (click)="cerrarSesion()">
+        <ion-icon name="log-out-outline" slot="start"></ion-icon>
+        <ion-label>Cerrar Sesión</ion-label>
+      </ion-item>
+    </ion-list>
+  </ion-content>
+</ion-menu>
+
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Home</ion-title>
+>>>>>>> Stashed changes
   </ion-toolbar>
 </ion-header>
 
@@ -13,8 +39,34 @@
     </ion-toolbar>
   </ion-header>
 
+<<<<<<< Updated upstream
   <div id="container">
     <strong>Ready to create an app?</strong>
     <p>Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
   </div>
 </ion-content>
+=======
+  <div id="container" style="text-align: center; margin-top: 20px">
+    <h2 *ngIf="nombreUsuario; else noUser">Bienvenido, {{ nombreUsuario }}!</h2>
+    <ng-template #noUser>
+      <h2>Bienvenido, invitado!</h2>
+    </ng-template>
+  </div>
+</ion-content>
+
+<ion-footer class="ion-no-border">
+  <div class="footer-content">
+    <div class="footer-links">
+      <a href="#">Acerca de</a>
+      <a href="#">Contacto</a>
+      <a href="#">Política de privacidad</a>
+    </div>
+    <div class="social-icons">
+      <ion-icon name="logo-facebook"></ion-icon>
+      <ion-icon name="logo-twitter"></ion-icon>
+      <ion-icon name="logo-instagram"></ion-icon>
+    </div>
+    <div class="copyright">© 2024 Duoc UC. Todos los derechos reservados.</div>
+  </div>
+</ion-footer>
+>>>>>>> Stashed changes

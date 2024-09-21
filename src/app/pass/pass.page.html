@@ -1,0 +1,65 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar>
+    <ion-title>Cambiar Contraseña</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <div class="change-password-container">
+    <div class="change-password-header">
+      <h2>Cambiar Contraseña</h2>
+      <p>Ingresa tu nombre de usuario y la nueva contraseña.</p>
+    </div>
+
+    <form [formGroup]="formulario" class="change-password-form">
+      <ion-item class="input-item">
+        <ion-icon name="person-outline" slot="start"></ion-icon>
+        <ion-input
+          formControlName="usuario"
+          label="Nombre de Usuario"
+          labelPlacement="floating"
+          placeholder="Nombre de Usuario"
+        ></ion-input>
+      </ion-item>
+
+      <ion-item class="input-item">
+        <ion-icon name="lock-closed-outline" slot="start"></ion-icon>
+        <ion-input
+          formControlName="nuevaPassword"
+          label="Nombre de Usuario"
+          labelPlacement="floating"
+          placeholder="Nombre de Usuario"
+          type="password"
+        ></ion-input>
+      </ion-item>
+
+      <ion-button
+        expand="block"
+        class="login-button"
+        (click)="cambiarContrasena()"
+      >
+        Cambiar Contraseña
+      </ion-button>
+
+      <div class="cambiar-links">
+        <a routerLink="/login">Volver al Inicio de Sesión</a>
+      </div>
+    </form>
+  </div>
+</ion-content>
+
+<ion-footer class="ion-no-border">
+  <div class="footer-content">
+    <div class="footer-links">
+      <a href="#">Acerca de</a>
+      <a href="#">Contacto</a>
+      <a href="#">Política de privacidad</a>
+    </div>
+    <div class="social-icons">
+      <ion-icon name="logo-facebook"></ion-icon>
+      <ion-icon name="logo-twitter"></ion-icon>
+      <ion-icon name="logo-instagram"></ion-icon>
+    </div>
+    <div class="copyright">© 2024 Duoc UC. Todos los derechos reservados.</div>
+  </div>
+</ion-footer>

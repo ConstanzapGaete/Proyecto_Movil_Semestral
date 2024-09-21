@@ -1,0 +1,47 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>Duoc UC</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form [formGroup]="formulario" (ngSubmit)="restablecer()">
+    <ion-item class="input-item">
+      <ion-icon></ion-icon>
+      <ion-input
+        formControlName="usuario"
+        label="Nombre"
+        labelPlacement="floating"
+        placeholder="Nombre"
+      ></ion-input>
+    </ion-item>
+    <ion-item class="input-item">
+      <ion-icon></ion-icon>
+      <ion-input
+        formControlName="password"
+        type="password"
+        label="Contraseña"
+        labelPlacement="floating"
+        placeholder="Contraseña"
+      ></ion-input>
+    </ion-item>
+
+    <ion-button type="submit" expand="full"> Crear nuevo usuario </ion-button>
+  </form>
+</ion-content>
+
+<ion-footer class="ion-no-border">
+  <div class="footer-content">
+    <div class="footer-links">
+      <a href="#">Acerca de</a>
+      <a href="#">Contacto</a>
+      <a href="#">Política de privacidad</a>
+    </div>
+    <div class="social-icons">
+      <ion-icon name="logo-facebook"></ion-icon>
+      <ion-icon name="logo-twitter"></ion-icon>
+      <ion-icon name="logo-instagram"></ion-icon>
+    </div>
+    <div class="copyright">© 2024 Duoc UC. Todos los derechos reservados.</div>
+  </div>
+</ion-footer>

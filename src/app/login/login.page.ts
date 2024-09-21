@@ -1,8 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
+import {
+  FormGroup,
+  FormControl,
+  Validators,
+  FormBuilder,
+} from '@angular/forms';
 import { AlertController, NavController } from '@ionic/angular';
 import { Router } from '@angular/router';
-import { ServicioAppService } from 'src/app/servicio-app.service'; 
+import { ServicioAppService } from 'src/app/servicio-app.service';
 
 @Component({
   selector: 'app-login',
@@ -10,7 +15,6 @@ import { ServicioAppService } from 'src/app/servicio-app.service';
   styleUrls: ['./login.page.scss'],
 })
 export class LoginPage implements OnInit {
-
   formulario: FormGroup;
 
   constructor(
@@ -18,29 +22,40 @@ export class LoginPage implements OnInit {
     public alertController: AlertController,
     private router: Router,
     public navctr: NavController,
-    private servicioAppService: ServicioAppService 
+    private servicioAppService: ServicioAppService
   ) {
     this.formulario = this.f.group({
-      'usuario': new FormControl("", Validators.required),
-      'password': new FormControl("", Validators.required)
+      usuario: new FormControl('', Validators.required),
+      password: new FormControl('', Validators.required),
     });
   }
 
-  ngOnInit() { }
+  ngOnInit() {}
 
   async ingresar() {
     if (!this.formulario.valid) {
-      await this.mostrarAlerta('Campos Vacíos', 'Por favor, llena todos los campos.');
+      await this.mostrarAlerta(
+        'Campos Vacíos',
+        'Por favor, llena todos los campos.'
+      );
       return;
     }
 
     const formulariologin = this.formulario.value;
 
     if (this.servicioAppService.hayUsuariosRegistrados()) {
-      if (this.servicioAppService.autenticarUsuario(formulariologin.usuario, formulariologin.password)) {
+      if (
+        this.servicioAppService.autenticarUsuario(
+          formulariologin.usuario,
+          formulariologin.password
+        )
+      ) {
         this.navctr.navigateRoot('home');
       } else {
-        await this.mostrarAlerta('Datos incorrectos', 'Los datos que ingresaste son incorrectos. >:c');
+        await this.mostrarAlerta(
+          'Datos incorrectos',
+          'Los datos que ingresaste son incorrectos. >:c'
+        );
       }
     } else {
       await this.mostrarAlerta('Error', 'No hay usuarios registrados.');
@@ -51,7 +66,7 @@ export class LoginPage implements OnInit {
     const alert = await this.alertController.create({
       header: header,
       message: message,
-      buttons: ['Aceptar']
+      buttons: ['Aceptar'],
     });
 
     await alert.present();

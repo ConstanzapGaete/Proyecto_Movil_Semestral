@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
+import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { AlertController, NavController } from '@ionic/angular';
 import { Router } from '@angular/router';
+import { ServicioAppService } from '../servicio-app.service';
 
 @Component({
   selector: 'app-pass',
@@ -9,60 +10,70 @@ import { Router } from '@angular/router';
   styleUrls: ['./pass.page.scss'],
 })
 export class PassPage implements OnInit {
-
-  formulario: FormGroup;
+  formulario: FormGroup = new FormGroup({});
 
   constructor(
-    public f: FormBuilder,
-    public alertController: AlertController,
+    private formBuilder: FormBuilder,
+    private alertController: AlertController,
     private router: Router,
-    public navCtrl: NavController
-  ) {
-    this.formulario = this.f.group({
-      'usuario': new FormControl('', [Validators.required]),
-      'nuevaPassword': new FormControl('', [Validators.required])
+    private navCtrl: NavController,
+    private servicioApp: ServicioAppService
+  ) {}
+
+  ngOnInit() {
+    this.initForm();
+  }
+
+  private initForm(): void {
+    this.formulario = this.formBuilder.group({
+      usuario: ['', [Validators.required, Validators.minLength(3)]],
+      nuevaPassword: ['', [Validators.required, Validators.minLength(6)]],
     });
   }
 
-  ngOnInit() { }
-
   async cambiarContrasena() {
-    if (this.formulario.invalid) {  
-      await this.mostrarAlerta('Campos incompletos', 'Por favor, completa todos los campos requeridos.');
+    if (this.formulario.invalid) {
+      await this.mostrarAlerta(
+        'Campos incompletos',
+        'Por favor, completa todos los campos requeridos.'
+      );
       return;
     }
 
-    const usuarioIngresado = this.formulario.value.usuario;
-    const nuevaPassword = this.formulario.value.nuevaPassword;
-    const storedUser = localStorage.getItem('usuario');
+    const { usuario: usuarioIngresado, nuevaPassword } = this.formulario.value;
 
-    if (storedUser) {
-      const user = JSON.parse(storedUser);
+    const usuarioExiste =
+      this.servicioApp.verificarUsuarioExistente(usuarioIngresado);
 
-      if (user.usuario.toLowerCase() === usuarioIngresado.toLowerCase()) {
-        
-        user.password = nuevaPassword;
-        localStorage.setItem('usuario', JSON.stringify(user));  
+    if (!usuarioExiste) {
+      await this.mostrarAlerta(
+        'Usuario no encontrado',
+        'El nombre de usuario que ingresaste no está registrado.'
+      );
+      return;
+    }
 
-        console.log('Contraseña cambiada:', nuevaPassword);
-        
-        // Mostrar la alerta de éxito
-        await this.mostrarAlerta('Contraseña Cambiada', 'Tu contraseña ha sido cambiada exitosamente.');
-        this.router.navigate(['/login']);  // Redirigir al login
+    const exito = this.servicioApp.cambiarContrasena(
+      usuarioIngresado,
+      nuevaPassword
+    );
 
-      } else {
-        await this.mostrarAlerta('Usuario no encontrado', 'El nombre de usuario que ingresaste no está registrado.');
-      }
+    if (exito) {
+      await this.mostrarAlerta(
+        'Contraseña Cambiada',
+        'Tu contraseña ha sido cambiada exitosamente.'
+      );
+      this.router.navigate(['/login']);
     } else {
-      await this.mostrarAlerta('Error', 'No hay usuarios registrados.');
+      await this.mostrarAlerta('Error', 'No se pudo cambiar la contraseña.');
     }
   }
 
-  async mostrarAlerta(header: string, message: string) {
+  private async mostrarAlerta(header: string, message: string): Promise<void> {
     const alert = await this.alertController.create({
-      header: header,
-      message: message,
-      buttons: ['Aceptar']
+      header,
+      message,
+      buttons: ['Aceptar'],
     });
     await alert.present();
   }

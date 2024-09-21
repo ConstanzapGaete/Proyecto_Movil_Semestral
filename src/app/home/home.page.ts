@@ -18,7 +18,7 @@ export class HomePage implements OnInit {
   ngOnInit() {
     const usuarioAutenticado = this.servicioAppService.obtenerUsuarioAutenticado();
     if (usuarioAutenticado) {
-      this.nombreUsuario = usuarioAutenticado.usuario; 
+      this.nombreUsuario = this.NombreMayus(usuarioAutenticado.usuario); 
     } else {
       this.nombreUsuario = 'Invitado'; 
     }
@@ -28,5 +28,9 @@ export class HomePage implements OnInit {
   cerrarSesion() {
     this.servicioAppService.cerrarSesion();
     this.navCtrl.navigateRoot('/login');  
+  }
+
+  NombreMayus(nombre: string): string {
+    return nombre.charAt(0).toUpperCase() + nombre.slice(1).toLowerCase();
   }
 }

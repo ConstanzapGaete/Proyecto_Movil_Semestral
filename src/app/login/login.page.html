@@ -80,15 +80,10 @@
 
 <ion-footer class="ion-no-border">
   <div class="footer-content">
-    <div class="footer-links">
-      <a href="#">Acerca de</a>
-      <a href="#">Contacto</a>
-      <a href="#">Política de privacidad</a>
-    </div>
     <div class="social-icons">
-      <ion-icon name="logo-facebook"></ion-icon>
-      <ion-icon name="logo-twitter"></ion-icon>
-      <ion-icon name="logo-instagram"></ion-icon>
+      <ion-icon name="mail-outline" (click)="abrirEnlace('https://www.duoc.cl/sedes/san-joaquin/informacion/')"></ion-icon>
+      <ion-icon name="logo-twitter" (click)="abrirEnlace('https://x.com/DuocUC?ref_src=twsrc%5Egoogle%7Ctwcamp%5Eserp%7Ctwgr%5Eauthor')"></ion-icon>
+      <ion-icon name="logo-instagram" (click)="abrirEnlace('https://www.instagram.com/duocucsanjoaquin/?hl=es')"></ion-icon>
     </div>
     <div class="copyright">© 2024 Duoc UC. Todos los derechos reservados.</div>
   </div>

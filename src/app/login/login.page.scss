@@ -1,0 +1,178 @@
+/* Estilos generales */
+ion-content {
+  --background: #f4f5f8;
+}
+
+.logo {
+  max-width: 150px;
+  margin: 40px auto 20px;
+}
+
+h1 {
+  font-size: 24px;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+p {
+  color: #666;
+  margin-bottom: 30px;
+}
+
+.login-form {
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.input-item {
+  --background: #ffffff;
+  --border-radius: 8px;
+  --border-color: #ddd;
+  margin-bottom: 16px;
+}
+
+ion-input {
+  --padding-start: 16px;
+}
+
+.login-button {
+  margin-top: 24px;
+  --border-radius: 8px;
+  --background: rgb(33, 33, 160);
+  --color: #ebd300f8;
+  font-weight: bold;
+}
+
+.login-links {
+  margin-top: 20px;
+}
+
+.login-links a {
+  color: rgb(33, 33, 160);
+  text-decoration: none;
+  font-size: 14px;
+}
+
+ion-header {
+  background: linear-gradient(
+    135deg,
+    rgb(33, 33, 160) 0%,
+    rgb(45, 45, 180) 100%
+  );
+
+  ion-toolbar {
+    --background: transparent;
+    --border-color: transparent;
+  }
+
+  .header-content {
+    display: flex;
+    align-items: center;
+    padding: 10px 16px;
+  }
+
+  .header-logo {
+    width: 40px;
+    height: 40px;
+    margin-right: 12px;
+  }
+
+  ion-title {
+    color: #ebd300f8;
+    font-weight: bold;
+    font-size: 20px;
+  }
+}
+
+ion-footer {
+  background: linear-gradient(
+    135deg,
+    rgb(33, 33, 160) 0%,
+    rgb(45, 45, 180) 100%
+  );
+  padding: 20px 0;
+
+  .footer-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0 16px;
+  }
+
+  .footer-links {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-bottom: 15px;
+
+    a {
+      color: #ebd300f8;
+      text-decoration: none;
+      margin: 0 10px;
+      font-size: 14px;
+      transition: opacity 0.3s ease;
+
+      &:hover {
+        opacity: 0.8;
+      }
+    }
+  }
+
+  .social-icons {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 15px;
+
+    ion-icon {
+      font-size: 24px;
+      color: #ebd300f8;
+      margin: 0 10px;
+      cursor: pointer;
+      transition: opacity 0.3s ease;
+
+      &:hover {
+        opacity: 0.8;
+      }
+    }
+  }
+
+  .copyright {
+    color: #ebd300f8;
+    font-size: 12px;
+    text-align: center;
+  }
+}
+
+@media (min-width: 768px) {
+  .login-form {
+    max-width: 400px;
+  }
+  ion-header {
+    .header-content {
+      justify-content: center;
+    }
+
+    .header-logo {
+      width: 50px;
+      height: 50px;
+    }
+
+    ion-title {
+      font-size: 24px;
+    }
+  }
+
+  ion-footer {
+    .footer-links a {
+      font-size: 16px;
+    }
+
+    .social-icons ion-icon {
+      font-size: 28px;
+    }
+
+    .copyright {
+      font-size: 14px;
+    }
+  }
+}

@@ -4,36 +4,15 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content
-  [fullscreen]="true"
-  class="login-content"
-  style="
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    padding: 16px;
-    height: 100%;
-  "
->
+<ion-content class="login-content">
   <div class="login-header" style="margin-bottom: 20px">
-    <img
-      src="assets/img/Registrapp.png"
-      alt="Logo"
-      class="logo"
-      style="width: 300px; height: auto; margin-bottom: 10px"
-    />
+    <img src="assets/img/Registrapp.png" alt="Logo" class="logo" />
     <h1 style="margin: 0">Bienvenido</h1>
     <p style="margin: 0">Inicia sesión para continuar</p>
   </div>
 
-  <form
-    [formGroup]="formulario"
-    class="login-form"
-    style="width: 100%; max-width: 400px"
-  >
-    <ion-item class="input-item" style="width: 100%; margin-bottom: 5px">
+  <form [formGroup]="formulario" class="login-form">
+    <ion-item class="input-item">
       <ion-icon name="person-outline" slot="start"></ion-icon>
       <ion-input
         label="Nombre de usuario"
@@ -57,13 +36,12 @@
       expand="block"
       class="login-button"
       color="primary"
-      style="width: 100%; margin-top: 20px"
       (click)="ingresar()"
     >
       Iniciar Sesión
     </ion-button>
 
-    <div class="login-links" style="margin-top: 10px; text-align: center">
+    <div class="login-links">
       <a routerLink="/pass">¿Olvidaste tu contraseña?</a>
     </div>
   </form>

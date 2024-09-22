@@ -1,5 +1,5 @@
-<ion-header [translucent]="true">
-  <ion-toolbar style="--background: rgb(33, 33, 160); --color: #ebd300f8">
+<ion-header>
+  <ion-toolbar>
     <ion-title>Duoc UC</ion-title>
   </ion-toolbar>
 </ion-header>
@@ -63,15 +63,6 @@
       Iniciar Sesión
     </ion-button>
 
-    <ion-button
-      expand="block"
-      class="login-button"
-      color="primary"
-      routerLink="/recuperar"
-    >
-      Registrate
-    </ion-button>
-
     <div class="login-links" style="margin-top: 10px; text-align: center">
       <a routerLink="/pass">¿Olvidaste tu contraseña?</a>
     </div>
@@ -81,9 +72,18 @@
 <ion-footer class="ion-no-border">
   <div class="footer-content">
     <div class="social-icons">
-      <ion-icon name="mail-outline" (click)="abrirEnlace('https://www.duoc.cl/sedes/san-joaquin/informacion/')"></ion-icon>
-      <ion-icon name="logo-twitter" (click)="abrirEnlace('https://x.com/DuocUC?ref_src=twsrc%5Egoogle%7Ctwcamp%5Eserp%7Ctwgr%5Eauthor')"></ion-icon>
-      <ion-icon name="logo-instagram" (click)="abrirEnlace('https://www.instagram.com/duocucsanjoaquin/?hl=es')"></ion-icon>
+      <ion-icon
+        name="mail-outline"
+        (click)="abrirEnlace('https://www.duoc.cl/sedes/san-joaquin/informacion/')"
+      ></ion-icon>
+      <ion-icon
+        name="logo-twitter"
+        (click)="abrirEnlace('https://x.com/DuocUC?ref_src=twsrc%5Egoogle%7Ctwcamp%5Eserp%7Ctwgr%5Eauthor')"
+      ></ion-icon>
+      <ion-icon
+        name="logo-instagram"
+        (click)="abrirEnlace('https://www.instagram.com/duocucsanjoaquin/?hl=es')"
+      ></ion-icon>
     </div>
     <div class="copyright">© 2024 Duoc UC. Todos los derechos reservados.</div>
   </div>

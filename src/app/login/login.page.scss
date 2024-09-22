@@ -48,21 +48,15 @@ ion-input {
 }
 
 .login-links a {
-  color: rgb(33, 33, 160);
+  color: #1466c3;
   text-decoration: none;
   font-size: 14px;
 }
 
 ion-header {
-  background: linear-gradient(
-    135deg,
-    rgb(33, 33, 160) 0%,
-    rgb(45, 45, 180) 100%
-  );
-
   ion-toolbar {
-    --background: transparent;
-    --border-color: transparent;
+    --background: #014ba0;
+    --color: #ebd300f8;
   }
 
   .header-content {
@@ -85,11 +79,7 @@ ion-header {
 }
 
 ion-footer {
-  background: linear-gradient(
-    135deg,
-    rgb(33, 33, 160) 0%,
-    rgb(45, 45, 180) 100%
-  );
+  background: #014ba0;
   padding: 20px 0;
 
   .footer-content {

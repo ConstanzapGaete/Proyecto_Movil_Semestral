@@ -29,8 +29,13 @@ export class HomePage implements OnInit {
     this.servicioAppService.cerrarSesion();
     this.navCtrl.navigateRoot('/login');  
   }
-
+ // esto es para que el nombre de user tenga mayuscula
   NombreMayus(nombre: string): string {
     return nombre.charAt(0).toUpperCase() + nombre.slice(1).toLowerCase();
+  }
+
+   // esto es para los enlaces del menu
+   abrirEnlace(url: string) {
+    window.open(url, '_blank');
   }
 }

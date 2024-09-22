@@ -70,3 +70,120 @@ ion-button {
     opacity: 1;
   }
 }
+
+/* botones de menu abajo */
+.fixed-bottom {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+}
+
+/* footer*/
+ion-footer {
+  background: #014ba0;
+  padding: 20px 0;
+
+  .footer-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0 16px;
+  }
+
+  .footer-links {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-bottom: 15px;
+
+    a {
+      color: #def7ff;
+      text-decoration: none;
+      margin: 0 10px;
+      font-size: 14px;
+      transition: opacity 0.3s ease;
+
+      &:hover {
+        opacity: 0.8;
+      }
+    }
+  }
+
+  .social-icons {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 15px;
+
+    ion-icon {
+      font-size: 24px;
+      color: #def7ff;
+      margin: 0 10px;
+      cursor: pointer;
+      transition: opacity 0.3s ease;
+
+      &:hover {
+        opacity: 0.8;
+      }
+    }
+  }
+
+  .copyright {
+    color: #def7ff;
+    font-size: 12px;
+    text-align: center;
+  }
+}
+
+@media (min-width: 768px) {
+  .login-form {
+    max-width: 400px;
+  }
+  ion-header {
+    .header-content {
+      justify-content: center;
+    }
+
+    .header-logo {
+      width: 50px;
+      height: 50px;
+    }
+
+    ion-title {
+      font-size: 24px;
+    }
+  }
+
+  ion-footer {
+    .footer-links a {
+      font-size: 16px;
+    }
+
+    .social-icons ion-icon {
+      font-size: 28px;
+    }
+
+    .copyright {
+      font-size: 14px;
+    }
+  }
+}
+
+
+ion-header {
+  ion-toolbar {
+    --background: #014ba0;
+    --color: #def7ff;
+  }
+
+  .header-content {
+    display: flex;
+    align-items: center;
+    padding: 10px 16px;
+  }
+
+  ion-title {
+    color: #def7ff;
+    font-weight: bold;
+    font-size: 20px;
+  }
+}

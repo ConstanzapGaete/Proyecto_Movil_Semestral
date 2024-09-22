@@ -26,13 +26,13 @@
 /* Aquí los botones animados para editar */
 .button-container {
   display: flex;
-  justify-content: space-around; 
-  margin-top: 20px; 
+  justify-content: space-around;
+  margin-top: 20px;
 }
 
 ion-button {
-  flex: 1; 
-  margin: 0 5px; 
+  flex: 1;
+  margin: 0 5px;
 }
 
 /* Aquí va la animacion de bienvenida para editar */
@@ -41,14 +41,14 @@ ion-button {
   color: #3880ff;
   font-weight: bold;
   margin-bottom: 10px;
-  animation: slideDown 1s ease-out; 
+  animation: slideDown 1s ease-out;
 }
 
 .welcome-message {
   font-size: 18px;
   color: #4a4a4a;
   margin-bottom: 20px;
-  animation: fadeIn 2s ease-in-out; 
+  animation: fadeIn 2s ease-in-out;
 }
 
 @keyframes slideDown {

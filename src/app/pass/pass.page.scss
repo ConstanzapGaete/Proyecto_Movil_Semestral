@@ -1,7 +1,7 @@
 ion-header {
   ion-toolbar {
     --background: #014ba0;
-    --color: #ebd300f8;
+    --color: #def7ff;
   }
 }
 
@@ -49,7 +49,7 @@ ion-header {
 .change-password-button {
   margin-top: 20px;
   --background: rgb(33, 33, 160);
-  --color: #ebd300f8;
+  --color: #def7ff;
 }
 
 .change-password-links {
@@ -79,7 +79,7 @@ ion-footer {
     margin-bottom: 15px;
 
     a {
-      color: #ebd300f8;
+      color: #def7ff;
       text-decoration: none;
       margin: 0 10px;
       font-size: 14px;
@@ -93,13 +93,13 @@ ion-footer {
 
     ion-icon {
       font-size: 24px;
-      color: #ebd300f8;
+      color: #def7ff;
       margin: 0 10px;
     }
   }
 
   .copyright {
-    color: #ebd300f8;
+    color: #def7ff;
     font-size: 12px;
     text-align: center;
   }

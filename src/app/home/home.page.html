@@ -48,11 +48,13 @@
   </ion-header>
 
   <div id="container" class="welcome-container">
-    <h2 class="welcome-text" *ngIf="nombreUsuario; else noUser">¡Bienvenido, {{ nombreUsuario }}!</h2>
+    <h2 class="welcome-text" *ngIf="nombreUsuario; else noUser">
+      ¡Bienvenido, {{ nombreUsuario }}!
+    </h2>
     <ng-template #noUser>
       <h2 class="welcome-text">¡Bienvenido, invitado!</h2>
     </ng-template>
-    
+
     <div class="button-container">
       <ion-button expand="full" color="primary">
         <ion-icon slot="start" name="scan-outline"></ion-icon>

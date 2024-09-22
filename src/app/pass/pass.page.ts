@@ -27,7 +27,7 @@ export class PassPage implements OnInit {
   private initForm(): void {
     this.formulario = this.formBuilder.group({
       usuario: ['', [Validators.required, Validators.minLength(3)]],
-      nuevaPassword: ['', [Validators.required, Validators.minLength(6)]],
+      nuevaPassword: ['', [Validators.required, Validators.minLength(5)]],
     });
   }
 

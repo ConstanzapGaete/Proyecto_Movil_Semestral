@@ -1,6 +1,6 @@
 ion-header {
   ion-toolbar {
-    --background: rgb(33, 33, 160);
+    --background: #014ba0;
     --color: #ebd300f8;
   }
 }
@@ -63,11 +63,7 @@ ion-header {
 }
 
 ion-footer {
-  background: linear-gradient(
-    135deg,
-    rgb(33, 33, 160) 0%,
-    rgb(45, 45, 180) 100%
-  );
+  background: #014ba0;
   padding: 20px 0;
 
   .footer-content {

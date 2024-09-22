@@ -1,39 +1,18 @@
-<ion-header [translucent]="true">
-  <ion-toolbar style="--background: rgb(33, 33, 160); --color: #ebd300f8">
+<ion-header>
+  <ion-toolbar>
     <ion-title>Duoc UC</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content
-  [fullscreen]="true"
-  class="login-content"
-  style="
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    padding: 16px;
-    height: 100%;
-  "
->
+<ion-content class="login-content">
   <div class="login-header" style="margin-bottom: 20px">
-    <img
-      src="assets/img/Registrapp.png"
-      alt="Logo"
-      class="logo"
-      style="width: 300px; height: auto; margin-bottom: 10px"
-    />
+    <img src="assets/img/Registrapp.png" alt="Logo" class="logo" />
     <h1 style="margin: 0">Bienvenido</h1>
     <p style="margin: 0">Inicia sesión para continuar</p>
   </div>
 
-  <form
-    [formGroup]="formulario"
-    class="login-form"
-    style="width: 100%; max-width: 400px"
-  >
-    <ion-item class="input-item" style="width: 100%; margin-bottom: 5px">
+  <form [formGroup]="formulario" class="login-form">
+    <ion-item class="input-item">
       <ion-icon name="person-outline" slot="start"></ion-icon>
       <ion-input
         label="Nombre de usuario"
@@ -57,22 +36,12 @@
       expand="block"
       class="login-button"
       color="primary"
-      style="width: 100%; margin-top: 20px"
       (click)="ingresar()"
     >
       Iniciar Sesión
     </ion-button>
 
-    <ion-button
-      expand="block"
-      class="login-button"
-      color="primary"
-      routerLink="/recuperar"
-    >
-      Registrate
-    </ion-button>
-
-    <div class="login-links" style="margin-top: 10px; text-align: center">
+    <div class="login-links">
       <a routerLink="/pass">¿Olvidaste tu contraseña?</a>
     </div>
   </form>
@@ -81,9 +50,18 @@
 <ion-footer class="ion-no-border">
   <div class="footer-content">
     <div class="social-icons">
-      <ion-icon name="mail-outline" (click)="abrirEnlace('https://www.duoc.cl/sedes/san-joaquin/informacion/')"></ion-icon>
-      <ion-icon name="logo-twitter" (click)="abrirEnlace('https://x.com/DuocUC?ref_src=twsrc%5Egoogle%7Ctwcamp%5Eserp%7Ctwgr%5Eauthor')"></ion-icon>
-      <ion-icon name="logo-instagram" (click)="abrirEnlace('https://www.instagram.com/duocucsanjoaquin/?hl=es')"></ion-icon>
+      <ion-icon
+        name="mail-outline"
+        (click)="abrirEnlace('https://www.duoc.cl/sedes/san-joaquin/informacion/')"
+      ></ion-icon>
+      <ion-icon
+        name="logo-twitter"
+        (click)="abrirEnlace('https://x.com/DuocUC?ref_src=twsrc%5Egoogle%7Ctwcamp%5Eserp%7Ctwgr%5Eauthor')"
+      ></ion-icon>
+      <ion-icon
+        name="logo-instagram"
+        (click)="abrirEnlace('https://www.instagram.com/duocucsanjoaquin/?hl=es')"
+      ></ion-icon>
     </div>
     <div class="copyright">© 2024 Duoc UC. Todos los derechos reservados.</div>
   </div>

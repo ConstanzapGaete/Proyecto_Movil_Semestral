@@ -1,12 +1,13 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
-import { noingresadoGuard } from './noingresado.guard';
-import { ingresadoGuard } from './ingresado.guard';
+import { noingresadoGuard } from './Guards/noingresado.guard';
+import { ingresadoGuard } from './Guards/ingresado.guard';
+
 
 const routes: Routes = [
   {
     path: 'home',
-    loadChildren: () => import('./home/home.module').then( m => m.HomePageModule),
+    loadChildren: () => import('./pages/home/home.module').then( m => m.HomePageModule),
     canActivate: [ingresadoGuard]
   },
   {
@@ -16,17 +17,17 @@ const routes: Routes = [
   },
   {
     path: 'login',
-    loadChildren: () => import('./login/login.module').then( m => m.LoginPageModule),
+    loadChildren: () => import('./pages/login/login.module').then( m => m.LoginPageModule),
     canActivate: [noingresadoGuard]
   },
   {
     path: 'recuperar',
-    loadChildren: () => import('./recuperar/recuperar.module').then( m => m.RecuperarPageModule),
+    loadChildren: () => import('./pages/recuperar/recuperar.module').then( m => m.RecuperarPageModule),
     canActivate: [noingresadoGuard]
   },
   {
     path: 'pass',
-    loadChildren: () => import('./pass/pass.module').then( m => m.PassPageModule)
+    loadChildren: () => import('./pages/pass/pass.module').then( m => m.PassPageModule)
   },
 ];
 

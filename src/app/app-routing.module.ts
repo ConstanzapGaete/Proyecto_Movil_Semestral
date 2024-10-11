@@ -29,6 +29,16 @@ const routes: Routes = [
     path: 'pass',
     loadChildren: () => import('./pages/pass/pass.module').then( m => m.PassPageModule)
   },
+  {
+    path: 'e404',
+    loadChildren: () => import('./pages/e404/e404.module').then( m => m.E404PageModule)
+  },
+  {
+    path: '**',
+    redirectTo: 'e404',
+    pathMatch: 'full'
+  },
+
 ];
 
 @NgModule({

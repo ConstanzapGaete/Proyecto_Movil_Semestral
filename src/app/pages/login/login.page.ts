@@ -71,7 +71,7 @@ export class LoginPage implements OnInit {
 
     await alert.present();
   }
-  // esto es para los enlaces del footer
+ 
   abrirEnlace(url: string) {
     window.open(url, '_blank');
   }

@@ -11,12 +11,12 @@ export class noingresadoGuard implements CanActivate {
 
   constructor(public navCtrl: NavController, private servicioAppService: ServicioAppService) {} 
 
-  canActivate(
+  async canActivate(
     next: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-    
-   
-    if (this.servicioAppService.obtenerUsuarioAutenticado()) {
+    state: RouterStateSnapshot): Promise<boolean | UrlTree> {
+
+    const isAuthenticated = await this.servicioAppService.obtenerUsuarioAutenticado(); 
+    if (isAuthenticated) {
       this.navCtrl.navigateRoot('home');
       return false;
     } else {

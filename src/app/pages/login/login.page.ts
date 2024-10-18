@@ -1,10 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {
-  FormGroup,
-  FormControl,
-  Validators,
-  FormBuilder,
-} from '@angular/forms';
+import {FormGroup,FormControl,Validators,FormBuilder,} from '@angular/forms';
 import { AlertController, NavController } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { ServicioAppService } from '../../Services/servicio-app.service';
@@ -43,13 +38,14 @@ export class LoginPage implements OnInit {
 
     const formulariologin = this.formulario.value;
 
-    if (this.servicioAppService.hayUsuariosRegistrados()) {
-      if (
-        this.servicioAppService.autenticarUsuario(
-          formulariologin.usuario,
-          formulariologin.password
-        )
-      ) {
+
+    if (await this.servicioAppService.hayUsuariosRegistrados()) {
+      const autenticado = await this.servicioAppService.autenticarUsuario(
+        formulariologin.usuario,
+        formulariologin.password
+      );
+
+      if (autenticado) {
         this.navctr.navigateRoot('home');
       } else {
         await this.mostrarAlerta(
@@ -71,7 +67,7 @@ export class LoginPage implements OnInit {
 
     await alert.present();
   }
- 
+
   abrirEnlace(url: string) {
     window.open(url, '_blank');
   }

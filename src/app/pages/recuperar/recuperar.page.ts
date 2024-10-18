@@ -40,8 +40,10 @@ export class RecuperarPage implements OnInit {
       return;
     }
 
-    
-    if (this.servicioAppService.verificarUsuarioExistente(f.usuario)) {
+
+    const usuarioExiste = await this.servicioAppService.verificarUsuarioExistente(f.usuario);
+
+    if (usuarioExiste) {
       const alert = await this.alertController.create({
         header: 'Usuario existente',
         message: 'El usuario ya existe, elige otro nombre de usuario.',
@@ -52,8 +54,8 @@ export class RecuperarPage implements OnInit {
       return;
     }
 
-    
-    this.servicioAppService.agregarUsuario(f.usuario, f.password);
+
+    await this.servicioAppService.agregarUsuario(f.usuario, f.password);
 
     const alert = await this.alertController.create({
       header: 'Usuario creado',

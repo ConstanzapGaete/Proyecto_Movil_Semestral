@@ -42,8 +42,8 @@ export class PassPage implements OnInit {
 
     const { usuario: usuarioIngresado, nuevaPassword } = this.formulario.value;
 
-    const usuarioExiste =
-      this.servicioApp.verificarUsuarioExistente(usuarioIngresado);
+
+    const usuarioExiste = await this.servicioApp.verificarUsuarioExistente(usuarioIngresado);
 
     if (!usuarioExiste) {
       await this.mostrarAlerta(
@@ -53,7 +53,7 @@ export class PassPage implements OnInit {
       return;
     }
 
-    const exito = this.servicioApp.cambiarContrasena(
+    const exito = await this.servicioApp.cambiarContrasena(
       usuarioIngresado,
       nuevaPassword
     );

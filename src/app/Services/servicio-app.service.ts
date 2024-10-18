@@ -1,26 +1,30 @@
 import { Injectable } from '@angular/core';
+import { Storage } from '@ionic/storage-angular';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ServicioAppService {
-  private usuarios: { usuario: string; password: string }[] = [
-    { usuario: 'marcopalmap', password: '123456' },
-    { usuario: 'constanza', password: '123456' },
-    { usuario: 'admin', password: 'admin' },
-  ];
-  private usuarioAutenticado: { usuario: string; password: string } | null =
-    null;
+  private usuarioAutenticado: { usuario: string; password: string } | null = null;
 
-  constructor() {}
-
-  agregarUsuario(usuario: string, password: string): void {
-    this.usuarios.push({ usuario, password });
+  constructor(private storage: Storage) {
+    this.init();
   }
 
-  autenticarUsuario(usuario: string, password: string): boolean {
-    const user = this.usuarios.find(
-      (user) =>
+  async init() {
+    await this.storage.create();
+  }
+
+  async agregarUsuario(usuario: string, password: string): Promise<void> {
+    const usuarios = (await this.storage.get('usuarios')) || [];
+    usuarios.push({ usuario, password });
+    await this.storage.set('usuarios', usuarios);
+  }
+
+  async autenticarUsuario(usuario: string, password: string): Promise<boolean> {
+    const usuarios = (await this.storage.get('usuarios')) || [];
+    const user = usuarios.find(
+      (user: { usuario: string; password: string }) =>
         user.usuario.trim().toLowerCase() === usuario.trim().toLowerCase() &&
         user.password === password
     );
@@ -31,8 +35,9 @@ export class ServicioAppService {
     return false;
   }
 
-  hayUsuariosRegistrados(): boolean {
-    return this.usuarios.length > 0;
+  async hayUsuariosRegistrados(): Promise<boolean> {
+    const usuarios = (await this.storage.get('usuarios')) || [];
+    return usuarios.length > 0;
   }
 
   obtenerUsuarioAutenticado(): { usuario: string; password: string } | null {
@@ -43,24 +48,27 @@ export class ServicioAppService {
     this.usuarioAutenticado = null;
   }
 
-  verificarUsuarioExistente(usuario: string): boolean {
-    return this.usuarios.some(
-      (user) =>
+  async verificarUsuarioExistente(usuario: string): Promise<boolean> {
+    const usuarios = (await this.storage.get('usuarios')) || [];
+    return usuarios.some(
+      (user: { usuario: string }) =>
         user.usuario.trim().toLowerCase() === usuario.trim().toLowerCase()
     );
   }
 
-  obtenerUsuarios() {
-    return this.usuarios;
+  async obtenerUsuarios() {
+    return (await this.storage.get('usuarios')) || [];
   }
 
-  cambiarContrasena(usuario: string, nuevaPassword: string): boolean {
-    const user = this.usuarios.find(
-      (user) =>
+  async cambiarContrasena(usuario: string, nuevaPassword: string): Promise<boolean> {
+    const usuarios = (await this.storage.get('usuarios')) || [];
+    const user = usuarios.find(
+      (user: { usuario: string }) =>
         user.usuario.trim().toLowerCase() === usuario.trim().toLowerCase()
     );
     if (user) {
       user.password = nuevaPassword;
+      await this.storage.set('usuarios', usuarios);
       return true;
     }
     return false;

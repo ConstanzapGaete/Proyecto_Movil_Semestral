@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
-import { AlertController, NavController } from '@ionic/angular';
+import { AlertController, MenuController } from '@ionic/angular';
+import { FirebaseService } from '../../Services/firebase.service';
 import { Router } from '@angular/router';
-import { ServicioAppService } from '../../Services/servicio-app.service';
 
 @Component({
   selector: 'app-pass',
@@ -14,10 +14,10 @@ export class PassPage implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder,
-    private alertController: AlertController,
+    private menuCtrl: MenuController,
+    private firebaseService: FirebaseService,
     private router: Router,
-    private navCtrl: NavController,
-    private servicioApp: ServicioAppService
+    public alertController: AlertController
   ) {}
 
   ngOnInit() {
@@ -26,55 +26,51 @@ export class PassPage implements OnInit {
 
   private initForm(): void {
     this.formulario = this.formBuilder.group({
-      usuario: ['', [Validators.required, Validators.minLength(3)]],
-      nuevaPassword: ['', [Validators.required, Validators.minLength(5)]],
+      email: [
+        '',
+        [Validators.required, Validators.email, Validators.minLength(5)],
+      ],
     });
   }
 
   async cambiarContrasena() {
-    if (this.formulario.invalid) {
-      await this.mostrarAlerta(
-        'Campos incompletos',
-        'Por favor, completa todos los campos requeridos.'
-      );
-      return;
-    }
+    const email = this.formulario.value['email'];
 
-    const { usuario: usuarioIngresado, nuevaPassword } = this.formulario.value;
-
-
-    const usuarioExiste = await this.servicioApp.verificarUsuarioExistente(usuarioIngresado);
-
-    if (!usuarioExiste) {
-      await this.mostrarAlerta(
-        'Usuario no encontrado',
-        'El nombre de usuario que ingresaste no está registrado.'
-      );
-      return;
-    }
-
-    const exito = await this.servicioApp.cambiarContrasena(
-      usuarioIngresado,
-      nuevaPassword
-    );
-
-    if (exito) {
-      await this.mostrarAlerta(
-        'Contraseña Cambiada',
-        'Tu contraseña ha sido cambiada exitosamente.'
-      );
-      this.router.navigate(['/login']);
+    if (this.formulario.valid) {
+      this.firebaseService.resetPassword(email).subscribe({
+        next: async () => {
+          const alert = await this.alertController.create({
+            header: 'Correo enviado',
+            message:
+              'Se ha enviado un correo electrónico para restablecer su contraseña.',
+            buttons: ['OK'],
+          });
+          await alert.present();
+          this.router.navigate(['/login']);
+        },
+        error: async (err) => {
+          const alert = await this.alertController.create({
+            header: 'Error',
+            message:
+              'Este correo electrónico no está registrado o hubo un problema al enviar el correo.',
+            buttons: ['OK'],
+          });
+          await alert.present();
+          console.log(err);
+        },
+      });
     } else {
-      await this.mostrarAlerta('Error', 'No se pudo cambiar la contraseña.');
+      const alert = await this.alertController.create({
+        header: 'Campos Vacíos',
+        message: 'Por favor, completa todos los campos antes de continuar.',
+        buttons: ['OK'],
+      });
+      await alert.present();
     }
   }
 
-  private async mostrarAlerta(header: string, message: string): Promise<void> {
-    const alert = await this.alertController.create({
-      header,
-      message,
-      buttons: ['Aceptar'],
-    });
-    await alert.present();
+  async abrirEnlace(url: string) {
+    await this.menuCtrl.close();
+    window.open(url, '_blank');
   }
 }

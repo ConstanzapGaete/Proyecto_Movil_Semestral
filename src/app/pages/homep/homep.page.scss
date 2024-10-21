@@ -1,89 +1,84 @@
-ion-content {
-  --background: #f4f5f8;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+#container {
   text-align: center;
-  padding: 16px;
-  height: 100%;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  animation: fadeIn 1.5s ease-in-out; /* esta es la animacion!!*/
 }
 
-.logo {
-  max-width: 150px;
-  margin: 40px auto 20px;
+#container strong {
+  font-size: 20px;
+  line-height: 26px;
 }
 
-h1 {
-  font-size: 24px;
-  color: #333;
-  margin-bottom: 10px;
+#container p {
+  font-size: 16px;
+  line-height: 22px;
+  color: #8c8c8c;
+  margin: 0;
 }
 
-p {
-  color: #666;
-  margin-bottom: 30px;
+#container a {
+  text-decoration: none;
 }
-
-.login-form {
-  margin: 0 auto;
-  padding: 0 20px;
-}
-
-.input-item {
-  --background: #ffffff;
-  --border-radius: 8px;
-  --border-color: #ddd;
-  margin-bottom: 16px;
-}
-
-ion-input {
-  --padding-start: 16px;
-}
-
-.login-button {
-  margin-top: 24px;
-  --border-radius: 8px;
-  --background: rgb(33, 33, 160);
-  --color: #ebd300f8;
-  font-weight: bold;
-}
-
-.login-links {
+/* Aquí los botones animados para editar */
+.button-container {
+  display: flex;
+  justify-content: space-around;
   margin-top: 20px;
 }
 
-.login-links a {
-  color: #1466c3;
-  text-decoration: none;
-  font-size: 14px;
+ion-button {
+  flex: 1;
+  margin: 0 5px;
 }
 
-ion-header {
-  ion-toolbar {
-    --background: #014ba0;
-    --color: #def7ff;
-  }
+/* Aquí va la animacion de bienvenida para editar */
+.welcome-text {
+  font-size: 24px;
+  color: #3880ff;
+  font-weight: bold;
+  margin-bottom: 10px;
+  animation: slideDown 1s ease-out;
+}
 
-  .header-content {
-    display: flex;
-    align-items: center;
-    padding: 10px 16px;
-  }
+.welcome-message {
+  font-size: 18px;
+  color: #4a4a4a;
+  margin-bottom: 20px;
+  animation: fadeIn 2s ease-in-out;
+}
 
-  .header-logo {
-    width: 40px;
-    height: 40px;
-    margin-right: 12px;
+@keyframes slideDown {
+  0% {
+    transform: translateY(-50px);
+    opacity: 0;
   }
-
-  ion-title {
-    color: #def7ff;
-    font-weight: bold;
-    font-size: 20px;
+  100% {
+    transform: translateY(0);
+    opacity: 1;
   }
 }
 
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+/* botones de menu abajo */
+.fixed-bottom {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+}
+
+/* footer*/
 ion-footer {
   background: #014ba0;
   padding: 20px 0;
@@ -170,5 +165,24 @@ ion-footer {
     .copyright {
       font-size: 14px;
     }
+  }
+}
+
+ion-header {
+  ion-toolbar {
+    --background: #014ba0;
+    --color: #def7ff;
+  }
+
+  .header-content {
+    display: flex;
+    align-items: center;
+    padding: 10px 16px;
+  }
+
+  ion-title {
+    color: #def7ff;
+    font-weight: bold;
+    font-size: 20px;
   }
 }

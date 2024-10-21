@@ -4,14 +4,13 @@ import { FirebaseService } from 'src/app/Services/firebase.service';
 import { Subscription } from 'rxjs';
 
 @Component({
-  selector: 'app-home',
-  templateUrl: './home.page.html',
-  styleUrls: ['./home.page.scss'],
+  selector: 'app-asignaturas',
+  templateUrl: './asignaturas.page.html',
+  styleUrls: ['./asignaturas.page.scss'],
 })
-export class HomePage implements OnInit, OnDestroy {
+export class AsignaturasPage implements OnInit, OnDestroy {
   nombreUsuario: string = 'Invitado';
   private authSubscription: Subscription;
-
   constructor(
     private navCtrl: NavController,
     private firebaseService: FirebaseService,
@@ -19,6 +18,7 @@ export class HomePage implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
+    this.menuCtrl.enable(true);
     this.authSubscription = this.firebaseService
       .getAuthState()
       .subscribe((user) => {
@@ -35,10 +35,12 @@ export class HomePage implements OnInit, OnDestroy {
       this.authSubscription.unsubscribe();
     }
   }
+  ionViewWillEnter() {
+    this.menuCtrl.enable(true);
+  }
 
   async cerrarSesion() {
     try {
-      await this.menuCtrl.close();
       this.firebaseService.signOut().subscribe({
         next: () => {
           console.log('Sesión cerrada exitosamente');
@@ -53,12 +55,17 @@ export class HomePage implements OnInit, OnDestroy {
     }
   }
 
-  async abrirEnlace(url: string) {
+  async asignaturas() {
     await this.menuCtrl.close();
-    window.open(url, '_blank');
+    this.navCtrl.navigateRoot('/asignaturas', {});
   }
 
-  ionViewWillEnter() {
-    this.menuCtrl.enable(true);
+  async home() {
+    await this.menuCtrl.close();
+    this.navCtrl.navigateRoot('/homep', {});
+  }
+
+  async abrirEnlace(url: string) {
+    window.open(url, '_blank');
   }
 }

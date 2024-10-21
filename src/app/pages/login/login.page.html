@@ -10,14 +10,14 @@
     <h1 style="margin: 0">Inicia sesión para continuar</h1>
   </div>
 
-  <form [formGroup]="formulario" class="login-form">
+  <form [formGroup]="formulario" class="login-form" (ngSubmit)="ingresar()">
     <ion-item class="input-item">
       <ion-icon name="person-outline" slot="start"></ion-icon>
       <ion-input
-        label="Nombre de usuario"
+        label="Email"
         labelPlacement="floating"
-        placeholder="Usuario"
-        formControlName="usuario"
+        placeholder="Email"
+        formControlName="email"
       ></ion-input>
     </ion-item>
     <ion-item class="input-item">
@@ -30,12 +30,11 @@
         type="password"
       ></ion-input>
     </ion-item>
-
     <ion-button
       expand="block"
       class="login-button"
       color="primary"
-      (click)="ingresar()"
+      type="submit"
     >
       Iniciar Sesión
     </ion-button>

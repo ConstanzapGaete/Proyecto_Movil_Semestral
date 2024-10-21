@@ -43,6 +43,7 @@ export class LoginPage implements OnInit {
       const autenticado = await this.servicioAppService.autenticarUsuario(
         formulariologin.usuario,
         formulariologin.password
+        
       );
 
       if (autenticado) {

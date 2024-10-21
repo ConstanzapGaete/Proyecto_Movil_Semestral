@@ -1,8 +1,14 @@
-import { Component, OnInit } from '@angular/core';
-import {FormGroup,FormControl,Validators,FormBuilder,} from '@angular/forms';
+import { Component, inject, OnInit } from '@angular/core';
+import {
+  FormGroup,
+  FormControl,
+  Validators,
+  FormBuilder,
+} from '@angular/forms';
 import { AlertController, NavController } from '@ionic/angular';
 import { Router } from '@angular/router';
-import { ServicioAppService } from '../../Services/servicio-app.service';
+import { FirebaseService } from 'src/app/Services/firebase.service';
+import { User } from 'src/app/Models/user.models';
 
 @Component({
   selector: 'app-login',
@@ -16,57 +22,50 @@ export class LoginPage implements OnInit {
     public f: FormBuilder,
     public alertController: AlertController,
     private router: Router,
-    public navctr: NavController,
-    private servicioAppService: ServicioAppService
+    public navctr: NavController
   ) {
     this.formulario = this.f.group({
-      usuario: new FormControl('', Validators.required),
+      email: new FormControl('', [Validators.required, Validators.email]),
       password: new FormControl('', Validators.required),
     });
   }
-
+  firebaseSvc = inject(FirebaseService);
   ngOnInit() {}
 
   async ingresar() {
-    if (!this.formulario.valid) {
-      await this.mostrarAlerta(
-        'Campos Vacíos',
-        'Por favor, llena todos los campos.'
-      );
-      return;
-    }
+    if (this.formulario.valid) {
+      this.firebaseSvc.signIn(this.formulario.value as User).subscribe({
+        next: (result) => {
+          const email = result.user.email;
 
-    const formulariologin = this.formulario.value;
-
-
-    if (await this.servicioAppService.hayUsuariosRegistrados()) {
-      const autenticado = await this.servicioAppService.autenticarUsuario(
-        formulariologin.usuario,
-        formulariologin.password
-        
-      );
-
-      if (autenticado) {
-        this.navctr.navigateRoot('home');
-      } else {
-        await this.mostrarAlerta(
-          'Datos incorrectos',
-          'Los datos que ingresaste son incorrectos. >:c'
-        );
-      }
+          if (email?.endsWith('@profesor.cl')) {
+            this.router.navigate(['homep']);
+            console.log('profe');
+          } else if (email?.endsWith('@alumno.cl')) {
+            this.router.navigate(['home']);
+            console.log('alumno');
+          } else {
+            this.router.navigate(['home']);
+          }
+        },
+        error: async (err) => {
+          const alert = await this.alertController.create({
+            header: 'Error',
+            message: 'Credenciales incorrectas o problema con el servidor.',
+            buttons: ['OK'],
+          });
+          await alert.present();
+          console.log(err);
+        },
+      });
     } else {
-      await this.mostrarAlerta('Error', 'No hay usuarios registrados.');
+      const alert = await this.alertController.create({
+        header: 'Campos Vacíos',
+        message: 'Por favor, completa todos los campos antes de continuar.',
+        buttons: ['OK'],
+      });
+      await alert.present();
     }
-  }
-
-  async mostrarAlerta(header: string, message: string) {
-    const alert = await this.alertController.create({
-      header: header,
-      message: message,
-      buttons: ['Aceptar'],
-    });
-
-    await alert.present();
   }
 
   abrirEnlace(url: string) {

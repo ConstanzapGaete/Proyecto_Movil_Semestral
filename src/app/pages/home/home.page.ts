@@ -57,4 +57,8 @@ export class HomePage implements OnInit, OnDestroy {
     await this.menuCtrl.close();
     window.open(url, '_blank');
   }
+
+  ionViewWillEnter() {
+    this.menuCtrl.enable(true);
+  }
 }

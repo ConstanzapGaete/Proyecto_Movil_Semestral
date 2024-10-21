@@ -8,7 +8,7 @@ import { Subscription } from 'rxjs';
   templateUrl: './asignaturas.page.html',
   styleUrls: ['./asignaturas.page.scss'],
 })
-export class AsignaturasPage implements OnInit {
+export class AsignaturasPage implements OnInit, OnDestroy {
   nombreUsuario: string = 'Invitado';
   private authSubscription: Subscription;
   constructor(
@@ -18,6 +18,7 @@ export class AsignaturasPage implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.menuCtrl.enable(true);
     this.authSubscription = this.firebaseService
       .getAuthState()
       .subscribe((user) => {
@@ -34,10 +35,12 @@ export class AsignaturasPage implements OnInit {
       this.authSubscription.unsubscribe();
     }
   }
+  ionViewWillEnter() {
+    this.menuCtrl.enable(true);
+  }
 
   async cerrarSesion() {
     try {
-      await this.menuCtrl.close();
       this.firebaseService.signOut().subscribe({
         next: () => {
           console.log('Sesión cerrada exitosamente');
@@ -52,8 +55,17 @@ export class AsignaturasPage implements OnInit {
     }
   }
 
-  async abrirEnlace(url: string) {
+  async asignaturas() {
     await this.menuCtrl.close();
+    this.navCtrl.navigateRoot('/asignaturas', {});
+  }
+
+  async home() {
+    await this.menuCtrl.close();
+    this.navCtrl.navigateRoot('/homep', {});
+  }
+
+  async abrirEnlace(url: string) {
     window.open(url, '_blank');
   }
 }

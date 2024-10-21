@@ -20,6 +20,7 @@ export class HomepPage implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
+    this.enableMenu();
     this.authSubscription = this.firebaseService
       .getAuthState()
       .subscribe((user) => {
@@ -39,6 +40,10 @@ export class HomepPage implements OnInit, OnDestroy {
     }
   }
 
+  enableMenu() {
+    this.menuCtrl.enable(true);
+  }
+
   async cerrarSesion() {
     await this.menuCtrl.close();
     this.firebaseService.signOut().subscribe({
@@ -52,7 +57,13 @@ export class HomepPage implements OnInit, OnDestroy {
   }
 
   async asignaturas() {
+    await this.menuCtrl.close();
     this.navCtrl.navigateRoot('/asignaturas', {});
+  }
+
+  async home() {
+    await this.menuCtrl.close();
+    this.navCtrl.navigateRoot('/homep', {});
   }
 
   async mostrarqr() {

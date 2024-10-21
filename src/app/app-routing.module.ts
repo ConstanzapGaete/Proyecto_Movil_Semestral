@@ -2,18 +2,21 @@ import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 import { noingresadoGuard } from './Guards/noingresado.guard';
 import { ingresadoGuard } from './Guards/ingresado.guard';
+import { autenticado } from './Guards/autenticado.guard';
+import { autenticadoa } from './Guards/autenticadoa.guard';
 
 const routes: Routes = [
   {
     path: 'home',
     loadChildren: () =>
       import('./pages/home/home.module').then((m) => m.HomePageModule),
-    canActivate: [ingresadoGuard],
+    canActivate: [ingresadoGuard, autenticadoa],
   },
   {
     path: 'homep',
     loadChildren: () =>
       import('./pages/homep/homep.module').then((m) => m.HomepPageModule),
+    canActivate: [autenticado],
   },
   {
     path: 'asignaturas',
@@ -21,6 +24,7 @@ const routes: Routes = [
       import('./pages/asignaturas/asignaturas.module').then(
         (m) => m.AsignaturasPageModule
       ),
+    canActivate: [autenticado],
   },
   {
     path: '',

@@ -3,48 +3,57 @@ import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 import { noingresadoGuard } from './Guards/noingresado.guard';
 import { ingresadoGuard } from './Guards/ingresado.guard';
 
-
 const routes: Routes = [
   {
     path: 'home',
-    loadChildren: () => import('./pages/home/home.module').then( m => m.HomePageModule),
-    canActivate: [ingresadoGuard]
+    loadChildren: () =>
+      import('./pages/home/home.module').then((m) => m.HomePageModule),
+    canActivate: [ingresadoGuard],
+  },
+  {
+    path: 'homep',
+    loadChildren: () =>
+      import('./pages/homep/homep.module').then((m) => m.HomepPageModule),
+  },
+  {
+    path: 'asignaturas',
+    loadChildren: () =>
+      import('./pages/asignaturas/asignaturas.module').then(
+        (m) => m.AsignaturasPageModule
+      ),
   },
   {
     path: '',
     redirectTo: 'login',
-    pathMatch: 'full'
+    pathMatch: 'full',
   },
   {
     path: 'login',
-    loadChildren: () => import('./pages/login/login.module').then( m => m.LoginPageModule),
-    canActivate: [noingresadoGuard]
-  },
-  {
-    path: 'recuperar',
-    loadChildren: () => import('./pages/recuperar/recuperar.module').then( m => m.RecuperarPageModule),
-    canActivate: [noingresadoGuard]
+    loadChildren: () =>
+      import('./pages/login/login.module').then((m) => m.LoginPageModule),
+    canActivate: [noingresadoGuard],
   },
   {
     path: 'pass',
-    loadChildren: () => import('./pages/pass/pass.module').then( m => m.PassPageModule)
+    loadChildren: () =>
+      import('./pages/pass/pass.module').then((m) => m.PassPageModule),
   },
   {
     path: 'e404',
-    loadChildren: () => import('./pages/e404/e404.module').then( m => m.E404PageModule)
+    loadChildren: () =>
+      import('./pages/e404/e404.module').then((m) => m.E404PageModule),
   },
   {
     path: '**',
     redirectTo: 'e404',
-    pathMatch: 'full'
+    pathMatch: 'full',
   },
-
 ];
 
 @NgModule({
   imports: [
-    RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules })
+    RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules }),
   ],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

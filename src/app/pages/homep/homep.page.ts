@@ -4,13 +4,14 @@ import { FirebaseService } from 'src/app/Services/firebase.service';
 import { Subscription } from 'rxjs';
 
 @Component({
-  selector: 'app-home',
-  templateUrl: './home.page.html',
-  styleUrls: ['./home.page.scss'],
+  selector: 'app-homep',
+  templateUrl: './homep.page.html',
+  styleUrls: ['./homep.page.scss'],
 })
-export class HomePage implements OnInit, OnDestroy {
-  nombreUsuario: string = 'Invitado';
+export class HomepPage implements OnInit, OnDestroy {
   private authSubscription: Subscription;
+  mostrarCodigoQR = false;
+  nombreUsuario: string = 'Usuario';
 
   constructor(
     private navCtrl: NavController,
@@ -24,8 +25,10 @@ export class HomePage implements OnInit, OnDestroy {
       .subscribe((user) => {
         if (user) {
           this.nombreUsuario = user.email || 'Usuario';
+          console.log('Usuario autenticado:', this.nombreUsuario);
         } else {
           this.nombreUsuario = 'Invitado';
+          console.log('No hay usuario autenticado');
         }
       });
   }
@@ -37,20 +40,26 @@ export class HomePage implements OnInit, OnDestroy {
   }
 
   async cerrarSesion() {
-    try {
-      await this.menuCtrl.close();
-      this.firebaseService.signOut().subscribe({
-        next: () => {
-          console.log('Sesión cerrada exitosamente');
-          this.navCtrl.navigateRoot('/login', {
-            animated: true,
-            animationDirection: 'forward',
-          });
-        },
-      });
-    } catch (error) {
-      console.error('Error al cerrar el menú:', error);
-    }
+    await this.menuCtrl.close();
+    this.firebaseService.signOut().subscribe({
+      next: () => {
+        this.navCtrl.navigateRoot('/login', {
+          animated: true,
+          animationDirection: 'forward',
+        });
+      },
+    });
+  }
+
+  async asignaturas() {
+    this.navCtrl.navigateRoot('/asignaturas', {});
+  }
+
+  async mostrarqr() {
+    this.mostrarCodigoQR = true;
+    setTimeout(() => {
+      this.mostrarCodigoQR = false;
+    }, 5000);
   }
 
   async abrirEnlace(url: string) {

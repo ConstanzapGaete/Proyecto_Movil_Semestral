@@ -4,14 +4,13 @@ import { FirebaseService } from 'src/app/Services/firebase.service';
 import { Subscription } from 'rxjs';
 
 @Component({
-  selector: 'app-home',
-  templateUrl: './home.page.html',
-  styleUrls: ['./home.page.scss'],
+  selector: 'app-asignaturas',
+  templateUrl: './asignaturas.page.html',
+  styleUrls: ['./asignaturas.page.scss'],
 })
-export class HomePage implements OnInit, OnDestroy {
+export class AsignaturasPage implements OnInit {
   nombreUsuario: string = 'Invitado';
   private authSubscription: Subscription;
-
   constructor(
     private navCtrl: NavController,
     private firebaseService: FirebaseService,

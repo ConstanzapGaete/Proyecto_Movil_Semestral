@@ -10,7 +10,7 @@
     <h1 style="margin: 0">Inicia sesión para continuar</h1>
   </div>
 
-  <form [formGroup]="formulario" class="login-form" (ngSubmit)="ingresar()">
+  <form [formGroup]="formulario" class="login-form">
     <ion-item class="input-item">
       <ion-icon name="person-outline" slot="start"></ion-icon>
       <ion-input
@@ -34,7 +34,7 @@
       expand="block"
       class="login-button"
       color="primary"
-      type="submit"
+      (click)="ingresar()"
     >
       Iniciar Sesión
     </ion-button>

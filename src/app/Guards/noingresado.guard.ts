@@ -31,6 +31,7 @@ export class noingresadoGuard implements CanActivate {
       take(1),
       map((user) => {
         if (user) {
+          console.log('no ingresado')
           return this.router.createUrlTree(['/home']);
         } else {
           return true;

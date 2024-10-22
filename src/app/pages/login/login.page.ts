@@ -37,26 +37,17 @@ export class LoginPage implements OnInit {
       this.firebaseSvc.signIn(this.formulario.value as User).subscribe({
         next: (result) => {
           const email = result.user.email;
-
+          console.log('llegamos')
           if (email?.endsWith('@profesor.cl')) {
             this.router.navigate(['homep']);
             console.log('profe');
           } else if (email?.endsWith('@alumno.cl')) {
             this.router.navigate(['home']);
             console.log('alumno');
-          } else {
-            this.router.navigate(['home']);
           }
-        },
-        error: async (err) => {
-          const alert = await this.alertController.create({
-            header: 'Error',
-            message: 'Credenciales incorrectas o problema con el servidor.',
-            buttons: ['OK'],
-          });
-          await alert.present();
-          console.log(err);
-        },
+          console.log('nos vamos')
+        }
+        
       });
     } else {
       const alert = await this.alertController.create({
@@ -64,8 +55,10 @@ export class LoginPage implements OnInit {
         message: 'Por favor, completa todos los campos antes de continuar.',
         buttons: ['OK'],
       });
-      await alert.present();
+      
     }
+    
+
   }
 
   abrirEnlace(url: string) {

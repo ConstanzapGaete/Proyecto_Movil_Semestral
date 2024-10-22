@@ -45,9 +45,8 @@ export class LoginPage implements OnInit {
             this.router.navigate(['home']);
             console.log('alumno');
           }
-          console.log('nos vamos')
+          console.log('nos vamoss')
         }
-        
       });
     } else {
       const alert = await this.alertController.create({

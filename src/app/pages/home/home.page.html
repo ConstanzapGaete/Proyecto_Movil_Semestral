@@ -60,17 +60,17 @@
     <h2>Asistencias</h2>
     <div class="attendance-list">
       <div class="attendance-item">
-        <span class="subject">arquitectura</span>
+        <span class="subject">Arquitectura</span>
         <ion-progress-bar value="0.8"></ion-progress-bar>
         <span class="percentage">80%</span>
       </div>
       <div class="attendance-item">
-        <span class="subject">programacion</span>
+        <span class="subject">Programacion</span>
         <ion-progress-bar value="0.65"></ion-progress-bar>
         <span class="percentage">65%</span>
       </div>
       <div class="attendance-item">
-        <span class="subject">religion</span>
+        <span class="subject">Religion</span>
         <ion-progress-bar value="0.9"></ion-progress-bar>
         <span class="percentage">90%</span>
       </div>
@@ -79,7 +79,7 @@
 
   <div class="camera-button">
     <ion-fab vertical="bottom" horizontal="end" slot="fixed">
-      <ion-fab-button>
+      <ion-fab-button (click)="scan()">
         <ion-icon name="camera"></ion-icon>
       </ion-fab-button>
     </ion-fab>

@@ -18,6 +18,7 @@ export class autenticadoa implements CanActivate {
       take(1),
       map((user) => {
         if (user && user.email?.endsWith('@alumno.cl')) {
+          console.log('autenticado A')
           return true;
         } else {
           this.router.navigate(['/login']);

@@ -50,11 +50,14 @@
 </ion-header>
 
 <ion-content [fullscreen]="true" id="main-content">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">RegistrAPP</ion-title>
-    </ion-toolbar>
-  </ion-header>
+  <div id="container" class="welcome-container">
+    <h2 class="welcome-text" *ngIf="nombreUsuario; else noUser">
+      ¡Bienvenido, {{ nombreUsuario }}!
+    </h2>
+    <ng-template #noUser>
+      <h2 class="welcome-text">¡Bienvenido, invitado!</h2>
+    </ng-template>
+  </div>
 
   <div class="attendance-container">
     <h2>Asistencias</h2>
@@ -65,12 +68,12 @@
         <span class="percentage">80%</span>
       </div>
       <div class="attendance-item">
-        <span class="subject">Programacion</span>
+        <span class="subject">Programación</span>
         <ion-progress-bar value="0.65"></ion-progress-bar>
         <span class="percentage">65%</span>
       </div>
       <div class="attendance-item">
-        <span class="subject">Religion</span>
+        <span class="subject">Religión</span>
         <ion-progress-bar value="0.9"></ion-progress-bar>
         <span class="percentage">90%</span>
       </div>

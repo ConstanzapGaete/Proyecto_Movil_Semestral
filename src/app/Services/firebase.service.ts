@@ -39,11 +39,9 @@ export class FirebaseService {
     console.log('cerrando');
     return from(this.auth.signOut()).pipe(
       tap(() => {
-        console.log('Firebase: Sesión cerrada con éxito');
         this.authState.next(null);
       }),
       catchError((error) => {
-        console.error('Firebase: Error al cerrar sesión', error);
         return throwError(() => new Error('No se pudo cerrar la sesión'));
       })
     );

@@ -6,9 +6,9 @@ import {
   FormBuilder,
 } from '@angular/forms';
 import {
+  LoadingController,
   AlertController,
   NavController,
-  LoadingController,
 } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { FirebaseService } from 'src/app/Services/firebase.service';

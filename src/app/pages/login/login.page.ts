@@ -5,10 +5,15 @@ import {
   Validators,
   FormBuilder,
 } from '@angular/forms';
-import { AlertController, NavController } from '@ionic/angular';
+import {
+  AlertController,
+  NavController,
+  LoadingController,
+} from '@ionic/angular';
 import { Router } from '@angular/router';
 import { FirebaseService } from 'src/app/Services/firebase.service';
 import { User } from 'src/app/Models/user.models';
+import { firstValueFrom } from 'rxjs';
 
 @Component({
   selector: 'app-login',
@@ -19,6 +24,7 @@ export class LoginPage implements OnInit {
   formulario: FormGroup;
 
   constructor(
+    private loadingController: LoadingController,
     public f: FormBuilder,
     public alertController: AlertController,
     private router: Router,
@@ -34,30 +40,46 @@ export class LoginPage implements OnInit {
 
   async ingresar() {
     if (this.formulario.valid) {
-      this.firebaseSvc.signIn(this.formulario.value as User).subscribe({
-        next: (result) => {
-          const email = result.user.email;
-          console.log('llegamos')
-          if (email?.endsWith('@profesor.cl')) {
-            this.router.navigate(['homep']);
-            console.log('profe');
-          } else if (email?.endsWith('@alumno.cl')) {
-            this.router.navigate(['home']);
-            console.log('alumno');
-          }
-          console.log('nos vamoss')
+      try {
+        const loading = await this.loadingController.create({
+          message: 'Iniciando sesión...',
+        });
+        await loading.present();
+
+        const result = await firstValueFrom(
+          this.firebaseSvc.signIn(this.formulario.value as User)
+        );
+
+        await loading.dismiss();
+
+        const email = result.user.email;
+
+        if (email?.endsWith('@profesor.cl')) {
+          await this.router.navigate(['homep'], { replaceUrl: true });
+          console.log('profe');
+        } else if (email?.endsWith('@alumno.cl')) {
+          await this.router.navigate(['home'], { replaceUrl: true });
+          console.log('alumno');
+        } else {
+          await this.router.navigate(['home'], { replaceUrl: true });
         }
-      });
+      } catch (err) {
+        const alert = await this.alertController.create({
+          header: 'Error',
+          message: 'Credenciales incorrectas o problema con el servidor.',
+          buttons: ['OK'],
+        });
+        await alert.present();
+        console.log(err);
+      }
     } else {
       const alert = await this.alertController.create({
         header: 'Campos Vacíos',
         message: 'Por favor, completa todos los campos antes de continuar.',
         buttons: ['OK'],
       });
-      
+      await alert.present();
     }
-    
-
   }
 
   abrirEnlace(url: string) {

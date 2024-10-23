@@ -28,15 +28,11 @@ export class ingresadoGuard implements CanActivate {
     | boolean
     | UrlTree {
     return this.firebaseService.getAuthState().pipe(
-      
       take(1),
       map((user) => {
-        console.log('estamos en el guard')
         if (user) {
-          console.log('ingresado')
           return true;
         } else {
-          console.log('nos fuimos  del guard')
           return this.router.createUrlTree(['/login']);
         }
       })

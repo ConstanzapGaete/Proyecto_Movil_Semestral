@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { CanActivate, Router } from '@angular/router';
 import { FirebaseService } from '../Services/firebase.service';
-import { Observable } from 'rxjs';
-import { map, take } from 'rxjs/operators';
+import { Observable, of } from 'rxjs';
+import { map, take, delay, switchMap } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root',
@@ -14,17 +14,24 @@ export class autenticadoa implements CanActivate {
   ) {}
 
   canActivate(): Observable<boolean> | Promise<boolean> | boolean {
-    return this.firebaseService.getAuthState().pipe(
-      take(1),
-      map((user) => {
-        if (user && user.email?.endsWith('@alumno.cl')) {
-          console.log('autenticado A')
-          return true;
-        } else {
-          this.router.navigate(['/login']);
-          return false;
-        }
-      })
+    return of(null).pipe(
+      delay(300),
+      switchMap(() =>
+        this.firebaseService.getAuthState().pipe(
+          take(1),
+          map((user) => {
+            if (user && user.email?.endsWith('@alumno.cl')) {
+              console.log('autenticado a');
+              console.log(user);
+              return true;
+            } else {
+              console.log('redirectToLogin a');
+              this.router.navigate(['/login']);
+              return false;
+            }
+          })
+        )
+      )
     );
   }
 }

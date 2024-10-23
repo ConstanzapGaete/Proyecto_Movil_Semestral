@@ -8,7 +8,7 @@ import {
 } from '@angular/router';
 import { Observable } from 'rxjs';
 import { FirebaseService } from '../Services/firebase.service';
-import { map, take } from 'rxjs/operators';
+import { endWith, map, take } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root',
@@ -31,8 +31,13 @@ export class noingresadoGuard implements CanActivate {
       take(1),
       map((user) => {
         if (user) {
-          console.log('no ingresado')
-          return this.router.createUrlTree(['/home']);
+          if (user.email?.endsWith('@alumno.cl')) {
+            this.router.navigate(['/home']);
+            return false;
+          } else {
+            this.router.navigate(['/homep']);
+            return false;
+          }
         } else {
           return true;
         }

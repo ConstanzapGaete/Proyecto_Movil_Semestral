@@ -48,6 +48,7 @@ export class FirebaseService {
   }
 
   getAuthState(): Observable<any> {
+    console.log()
     return this.authState.asObservable();
   }
 

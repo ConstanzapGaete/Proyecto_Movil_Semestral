@@ -1,8 +1,6 @@
-#container {
+#welcome-container {
   text-align: center;
   position: absolute;
-  left: 0;
-  right: 0;
   top: 50%;
   transform: translateY(-50%);
   animation: fadeIn 1.5s ease-in-out; /* esta es la animacion!!*/
@@ -93,6 +91,7 @@ ion-button {
   font-weight: bold;
   margin-bottom: 10px;
   animation: slideDown 1s ease-out;
+  text-align: center;
 }
 
 .welcome-message {

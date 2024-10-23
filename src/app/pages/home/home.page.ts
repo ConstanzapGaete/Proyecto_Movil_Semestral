@@ -25,7 +25,7 @@ export class HomePage implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.authSubscription = this.firebaseService.getAuthState().subscribe((user) => {
-      this.nombreUsuario = user ? user.email || 'Usuario' : 'Invitado';
+      this.nombreUsuario = user ? this.extraerNombre(user.email) : 'Invitado';
     });
   }
 
@@ -88,5 +88,9 @@ export class HomePage implements OnInit, OnDestroy {
 
   ionViewWillEnter() {
     this.menuCtrl.enable(true);
+  }
+  extraerNombre(email: string): string {
+    const nombre = email.split('@')[0]; 
+    return nombre.charAt(0).toUpperCase() + nombre.slice(1);
   }
 }

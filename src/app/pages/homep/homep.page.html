@@ -61,6 +61,13 @@
   </ion-header>
 
   <div id="container" class="welcome-container">
+    <div>
+      <ion-text>
+        <p>{{ ubicacion }}</p>
+        <p>{{ dia }} {{ horas }}</p>
+        <p>{{ fechaa }}</p>
+      </ion-text>
+    </div>
     <h2 class="welcome-text" *ngIf="nombreUsuario; else noUser">
       ¡Bienvenido, {{ nombreUsuario }}!
     </h2>

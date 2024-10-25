@@ -20,17 +20,10 @@ export class HomepPage implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
-    this.enableMenu();
     this.authSubscription = this.firebaseService
       .getAuthState()
       .subscribe((user) => {
-        if (user) {
-          this.nombreUsuario = user.email || 'Usuario';
-          console.log('Usuario autenticado:', this.nombreUsuario);
-        } else {
-          this.nombreUsuario = 'Invitado';
-          console.log('No hay usuario autenticado');
-        }
+        this.nombreUsuario = user ? this.extraerNombre(user.email) : 'Invitado';
       });
   }
 
@@ -76,5 +69,10 @@ export class HomepPage implements OnInit, OnDestroy {
   async abrirEnlace(url: string) {
     await this.menuCtrl.close();
     window.open(url, '_blank');
+  }
+
+  extraerNombre(email: string): string {
+    const nombre = email.split('@')[0];
+    return nombre.charAt(0).toUpperCase() + nombre.slice(1);
   }
 }

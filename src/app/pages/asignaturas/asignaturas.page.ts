@@ -11,6 +11,7 @@ import { Subscription } from 'rxjs';
 export class AsignaturasPage implements OnInit, OnDestroy {
   nombreUsuario: string = 'Invitado';
   private authSubscription: Subscription;
+  MostrarqrId: string | null = null;
   constructor(
     private navCtrl: NavController,
     private firebaseService: FirebaseService,
@@ -67,5 +68,14 @@ export class AsignaturasPage implements OnInit, OnDestroy {
 
   async abrirEnlace(url: string) {
     window.open(url, '_blank');
+  }
+
+  async mostrarqr(idCard: string) {
+    this.MostrarqrId = idCard;
+    setTimeout(() => {
+      if (this.MostrarqrId === idCard) {
+        this.MostrarqrId = null;
+      }
+    }, 10000);
   }
 }

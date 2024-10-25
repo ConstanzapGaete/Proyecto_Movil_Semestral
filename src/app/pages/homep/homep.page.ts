@@ -2,6 +2,8 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { NavController, MenuController } from '@ionic/angular';
 import { FirebaseService } from 'src/app/Services/firebase.service';
 import { Subscription } from 'rxjs';
+import { Geolocation } from '@capacitor/geolocation';
+import { GeocodingService } from 'src/app/Services/geolocalizacion.service';
 
 @Component({
   selector: 'app-homep',
@@ -10,21 +12,29 @@ import { Subscription } from 'rxjs';
 })
 export class HomepPage implements OnInit, OnDestroy {
   private authSubscription: Subscription;
-  mostrarCodigoQR = false;
   nombreUsuario: string = 'Usuario';
+  latitud: number | null = null;
+  longitud: number | null = null;
+  dia: string = '';
+  fechaa: string = '';
+  horas: string = '';
+  ubicacion: string = '';
 
   constructor(
     private navCtrl: NavController,
     private firebaseService: FirebaseService,
-    private menuCtrl: MenuController
+    private menuCtrl: MenuController,
+    private ubi: GeocodingService
   ) {}
 
-  ngOnInit() {
+  async ngOnInit() {
     this.authSubscription = this.firebaseService
       .getAuthState()
       .subscribe((user) => {
         this.nombreUsuario = user ? this.extraerNombre(user.email) : 'Invitado';
       });
+    await this.ObtenerUbicacion();
+    this.obtenerFecha();
   }
 
   ngOnDestroy() {
@@ -59,13 +69,6 @@ export class HomepPage implements OnInit, OnDestroy {
     this.navCtrl.navigateRoot('/homep', {});
   }
 
-  async mostrarqr() {
-    this.mostrarCodigoQR = true;
-    setTimeout(() => {
-      this.mostrarCodigoQR = false;
-    }, 5000);
-  }
-
   async abrirEnlace(url: string) {
     await this.menuCtrl.close();
     window.open(url, '_blank');
@@ -74,5 +77,37 @@ export class HomepPage implements OnInit, OnDestroy {
   extraerNombre(email: string): string {
     const nombre = email.split('@')[0];
     return nombre.charAt(0).toUpperCase() + nombre.slice(1);
+  }
+
+  async ObtenerUbicacion() {
+    try {
+      const coordinates = await Geolocation.getCurrentPosition();
+      this.latitud = coordinates.coords.latitude;
+      this.longitud = coordinates.coords.longitude;
+      console.log('Latitud:', this.latitud, 'Longitud:', this.longitud);
+      this.ubicacion = await this.ubi.getLocation(this.latitud, this.longitud);
+    } catch (error) {
+      console.error('Error al obtener ubicación:', error);
+    }
+  }
+
+  obtenerFecha() {
+    const fecha = new Date();
+
+    const opcionesFecha: Intl.DateTimeFormatOptions = {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+    };
+    const opcionesDia: Intl.DateTimeFormatOptions = { weekday: 'long' };
+    const opcionesHora: Intl.DateTimeFormatOptions = {
+      hour: 'numeric',
+      minute: 'numeric',
+      second: 'numeric',
+    };
+
+    this.fechaa = fecha.toLocaleDateString('es-ES', opcionesFecha);
+    this.dia = fecha.toLocaleDateString('es-ES', opcionesDia);
+    this.horas = fecha.toLocaleTimeString('es-ES', opcionesHora);
   }
 }

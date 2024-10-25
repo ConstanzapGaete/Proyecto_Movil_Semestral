@@ -59,6 +59,69 @@
       <ion-title size="large">RegistrAPP</ion-title>
     </ion-toolbar>
   </ion-header>
+  <ion-card id="Arquitectura">
+    <ion-card-header>
+      <ion-card-title>Arquitectura</ion-card-title>
+      <ion-card-subtitle>ASY4131</ion-card-subtitle>
+    </ion-card-header>
+    <ion-card-content>
+      Here's a small text description for the card content. Nothing more,
+      nothing less.
+    </ion-card-content>
+
+    <qr-code
+      *ngIf="MostrarqrId === 'Arquitectura'"
+      value="ASY4131"
+      size="300"
+      errorCorrectionLevel="M"
+    ></qr-code>
+    <br />
+    <ion-button (click)="mostrarqr('Arquitectura')"
+      >Registrar Asistencia</ion-button
+    >
+  </ion-card>
+
+  <ion-card id="moviles">
+    <ion-card-header>
+      <ion-card-title>Programación de aplicaciones móviles</ion-card-title>
+      <ion-card-subtitle>PGY4121</ion-card-subtitle>
+    </ion-card-header>
+    <ion-card-content>
+      Here's a small text description for the card content. Nothing more,
+      nothing less.
+    </ion-card-content>
+
+    <qr-code
+      *ngIf="MostrarqrId === 'moviles'"
+      value="PGY4121"
+      size="300"
+      errorCorrectionLevel="M"
+    ></qr-code>
+    <br />
+    <ion-button (click)="mostrarqr('moviles')">Registrar Asistencia</ion-button>
+  </ion-card>
+
+  <ion-card id="Software">
+    <ion-card-header>
+      <ion-card-title>Calidad de Software</ion-card-title>
+      <ion-card-subtitle>CSY4111</ion-card-subtitle>
+    </ion-card-header>
+    <ion-card-content>
+      Here's a small text description for the card content. Nothing more,
+      nothing less.
+    </ion-card-content>
+
+    <qr-code
+      *ngIf="MostrarqrId === 'Software'"
+      value="CSY4111"
+      size="300"
+      errorCorrectionLevel="M"
+    ></qr-code>
+    <br />
+    <ion-button (click)="mostrarqr('Software')"
+      >Registrar Asistencia</ion-button
+    >
+  </ion-card>
 </ion-content>
 
 <ion-footer class="ion-no-border">

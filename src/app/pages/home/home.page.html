@@ -57,6 +57,13 @@
     <ng-template #noUser>
       <h2 class="welcome-text">¡Bienvenido, invitado!</h2>
     </ng-template>
+    <div style="text-align: center">
+      <ion-text>
+        <p>{{ ubicacion }}</p>
+        <p>{{ dia }} {{ horas }}</p>
+        <p>{{ fechaa }}</p>
+      </ion-text>
+    </div>
   </div>
 
   <div class="attendance-container">
@@ -79,7 +86,6 @@
       </div>
     </div>
   </div>
-
   <div class="camera-button">
     <ion-fab vertical="bottom" horizontal="end" slot="fixed">
       <ion-fab-button (click)="scan()">

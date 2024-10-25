@@ -7,16 +7,9 @@ import { IonicModule } from '@ionic/angular';
 import { HomepPageRoutingModule } from './homep-routing.module';
 
 import { HomepPage } from './homep.page';
-import { QrCodeModule } from 'ng-qrcode';
 
 @NgModule({
-  imports: [
-    CommonModule,
-    FormsModule,
-    IonicModule,
-    HomepPageRoutingModule,
-    QrCodeModule,
-  ],
+  imports: [CommonModule, FormsModule, IonicModule, HomepPageRoutingModule],
   declarations: [HomepPage],
 })
 export class HomepPageModule {}

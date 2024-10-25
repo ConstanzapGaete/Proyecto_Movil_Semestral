@@ -63,7 +63,7 @@ export class HomepPage implements OnInit, OnDestroy {
     this.mostrarCodigoQR = true;
     setTimeout(() => {
       this.mostrarCodigoQR = false;
-    }, 5000);
+    }, 10000);
   }
 
   async abrirEnlace(url: string) {

@@ -67,20 +67,6 @@
     <ng-template #noUser>
       <h2 class="welcome-text">¡Bienvenido, invitado!</h2>
     </ng-template>
-
-    <qr-code
-      *ngIf="mostrarCodigoQR"
-      value="Hello world!"
-      size="300"
-      errorCorrectionLevel="M"
-    />
-
-    <div class="button-container">
-      <ion-button expand="full" color="primary" (click)="mostrarqr()">
-        <ion-icon slot="start" name="scan-outline"></ion-icon>
-        Registrar asistencia
-      </ion-button>
-    </div>
   </div>
 </ion-content>
 

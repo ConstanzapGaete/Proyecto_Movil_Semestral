@@ -1,15 +1,19 @@
-<ion-header style="align-items: center">
-  <ion-title>Página no Encontrada</ion-title>
+<ion-header>
+  <ion-title class="text-container">Página no Encontrada</ion-title>
 </ion-header>
 
 <ion-content class="ion-padding">
   <div class="img-container">
     <ion-img src="assets/img/error_404.svg"></ion-img>
   </div>
+  <div class="message-container">
+    <p>la página que estás buscando no existe :c </p>
+  </div>
 </ion-content>
+
 <ion-footer>
-  <ion-button routerLink="/login" expand="block" class="ion-margin-top">
+  <ion-button routerLink="/login" expand="block" class="ion-margin button-center">
     <ion-icon name="home" slot="start"></ion-icon>
-    Login
+    Ir al Login
   </ion-button>
 </ion-footer>

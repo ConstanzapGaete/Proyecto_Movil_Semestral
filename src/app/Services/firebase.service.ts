@@ -48,16 +48,24 @@ export class FirebaseService {
   }
 
   getAuthState(): Observable<any> {
-    console.log()
-    return this.authState.asObservable();
+    return this.auth.authState.pipe(
+      tap((user) => console.log('Firebase Auth State:', user))
+    );
   }
 
   resetPassword(email: string): Observable<void> {
     return from(sendPasswordResetEmail(getAuth(), email));
   }
 
-  getCurrentUser(): Observable<any> {
-    return this.auth.authState;
+  async getCurrentUser() {
+    try {
+      const user = await this.auth.currentUser;
+      console.log('Current user:', user);
+      return user;
+    } catch (error) {
+      console.error('Error getting current user:', error);
+      return null;
+    }
   }
 
   isLoggedIn(): Observable<boolean> {

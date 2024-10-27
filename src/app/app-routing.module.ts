@@ -10,7 +10,7 @@ const routes: Routes = [
     path: 'home',
     loadChildren: () =>
       import('./pages/home/home.module').then((m) => m.HomePageModule),
-    canActivate: [autenticadoa],
+    canActivate: [ingresadoGuard, autenticadoa],
   },
   {
     path: 'homep',
@@ -35,7 +35,6 @@ const routes: Routes = [
     path: 'login',
     loadChildren: () =>
       import('./pages/login/login.module').then((m) => m.LoginPageModule),
-
     canActivate: [noingresadoGuard],
   },
   {

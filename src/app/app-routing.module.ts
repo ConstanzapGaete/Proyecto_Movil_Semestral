@@ -1,10 +1,6 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 import { UserType } from 'src/app/Models/tipos.users';
-import { noingresadoGuard } from './Guards/noingresado.guard';
-import { ingresadoGuard } from './Guards/ingresado.guard';
-import { autenticado } from './Guards/autenticado.guard';
-import { autenticadoa } from './Guards/autenticadoa.guard';
 import { AuthGuard } from './Guards/auth-guard.guard';
 import { LoginGuard } from './Guards/login-guard.guard';
 

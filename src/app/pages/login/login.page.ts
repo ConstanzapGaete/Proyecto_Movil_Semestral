@@ -22,6 +22,7 @@ import { firstValueFrom } from 'rxjs';
 })
 export class LoginPage implements OnInit {
   formulario: FormGroup;
+  loading: HTMLIonLoadingElement | null = null;
 
   constructor(
     private loadingController: LoadingController,
@@ -35,22 +36,31 @@ export class LoginPage implements OnInit {
       password: new FormControl('', Validators.required),
     });
   }
+
   firebaseSvc = inject(FirebaseService);
+
   ngOnInit() {}
+
+  async mostrarError(mensaje: string) {
+    const alert = await this.alertController.create({
+      header: 'Error',
+      message: mensaje,
+      buttons: ['OK'],
+    });
+    await alert.present();
+  }
 
   async ingresar() {
     if (this.formulario.valid) {
       try {
-        const loading = await this.loadingController.create({
+        this.loading = await this.loadingController.create({
           message: 'Iniciando sesión...',
         });
-        await loading.present();
+        await this.loading.present();
 
         const result = await firstValueFrom(
           this.firebaseSvc.signIn(this.formulario.value as User)
         );
-
-        await loading.dismiss();
 
         const email = result.user.email;
 
@@ -64,21 +74,20 @@ export class LoginPage implements OnInit {
           await this.router.navigate(['home'], { replaceUrl: true });
         }
       } catch (err) {
-        const alert = await this.alertController.create({
-          header: 'Error',
-          message: 'Credenciales incorrectas o problema con el servidor.',
-          buttons: ['OK'],
-        });
-        await alert.present();
         console.log(err);
+        await this.mostrarError(
+          'Credenciales incorrectas o problema con el servidor.'
+        );
+      } finally {
+        if (this.loading) {
+          await this.loading.dismiss();
+          this.loading = null;
+        }
       }
     } else {
-      const alert = await this.alertController.create({
-        header: 'Campos Vacíos',
-        message: 'Por favor, completa todos los campos antes de continuar.',
-        buttons: ['OK'],
-      });
-      await alert.present();
+      await this.mostrarError(
+        'Por favor, completa todos los campos antes de continuar.'
+      );
     }
   }
 

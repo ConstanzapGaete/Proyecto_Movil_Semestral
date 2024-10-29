@@ -43,22 +43,22 @@ export class AuthGuard implements CanActivate {
       }),
       map((user) => {
         if (!user) {
-          console.log('No user found, redirecting to login');
+          console.log('Usuario no encontrado, redirigiendo al login');
           return this.router.createUrlTree(['/login']);
         }
 
         const userType = this.getUserType(user.email);
-        console.log('Determined user type:', userType);
+        console.log('Determinando tipo de usuario:', userType);
 
         if (requiredType && requiredType !== userType) {
           console.log(
-            'User type mismatch, redirecting to:',
+            'Usuario sin coincidencias, redireccionando:',
             this.ROUTES[userType]
           );
           return this.router.createUrlTree([this.ROUTES[userType]]);
         }
 
-        console.log('Access granted');
+        console.log('Acceso correcto');
         return true;
       })
     );
@@ -71,7 +71,7 @@ export class AuthGuard implements CanActivate {
     if (email.endsWith('@alumno.cl')) {
       return UserType.ALUMNO;
     }
-    console.log('Email domain not recognized:', email);
-    return UserType.ALUMNO; // Default fallback
+    console.log('Dominio del email no reconocido:', email);
+    return UserType.ALUMNO;
   }
 }

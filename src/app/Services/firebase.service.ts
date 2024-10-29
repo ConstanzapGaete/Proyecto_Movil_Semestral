@@ -63,7 +63,7 @@ export class FirebaseService {
       console.log('Current user:', user);
       return user;
     } catch (error) {
-      console.error('Error getting current user:', error);
+      console.error('Error Obteniendo usuario actual:', error);
       return null;
     }
   }

@@ -16,17 +16,17 @@ export class GeocodingService {
           lat,
           lon,
           format: 'json',
-          addressdetails: 1, // Asegúrate de incluir los detalles de la dirección
+          addressdetails: 1,
         },
       });
 
       const { address } = response.data;
       const country = address.country || 'Desconocido';
       const comuna = address.suburb || address.neighborhood || 'Sin comuna';
-
+      console.log({ address });
       return ` ${comuna}, ${country}`;
     } catch (error) {
-      console.error('Error fetching location:', error);
+      console.error('Error buscando localizacion:', error);
       return 'Ubicación no encontrada';
     }
   }

@@ -42,7 +42,6 @@ export class AuthGuard implements CanActivate {
         }
       }),
       map((user) => {
-        // Si no hay usuario autenticado
         if (!user) {
           console.log('No user found, redirecting to login');
           return this.router.createUrlTree(['/login']);
@@ -51,7 +50,6 @@ export class AuthGuard implements CanActivate {
         const userType = this.getUserType(user.email);
         console.log('Determined user type:', userType);
 
-        // Si la ruta requiere un tipo específico
         if (requiredType && requiredType !== userType) {
           console.log(
             'User type mismatch, redirecting to:',

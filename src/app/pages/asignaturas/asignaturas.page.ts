@@ -19,7 +19,6 @@ export class AsignaturasPage implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
-    this.menuCtrl.enable(true);
     this.authSubscription = this.firebaseService
       .getAuthState()
       .subscribe((user) => {
@@ -35,9 +34,6 @@ export class AsignaturasPage implements OnInit, OnDestroy {
     if (this.authSubscription) {
       this.authSubscription.unsubscribe();
     }
-  }
-  ionViewWillEnter() {
-    this.menuCtrl.enable(true);
   }
 
   async cerrarSesion() {

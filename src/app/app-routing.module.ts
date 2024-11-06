@@ -50,10 +50,18 @@ const routes: Routes = [
       import('./pages/e404/e404.module').then((m) => m.E404PageModule),
   },
   {
+    path: 'justificara',
+    loadChildren: () => import('./pages/justificara/justificara.module').then( m => m.JustificaraPageModule),
+    canActivate: [AuthGuard],
+    data: { userType: UserType.ALUMNO },
+  },
+  {
     path: '**',
     redirectTo: 'e404',
     pathMatch: 'full',
   },
+ 
+
 ];
 
 @NgModule({

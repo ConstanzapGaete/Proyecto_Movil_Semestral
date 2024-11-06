@@ -51,6 +51,12 @@ export class JustificaraPage implements OnInit {
     console.log("Fecha seleccionada:", fecha);
     
   }
-  
+  irAlHome() {
+    this.navCtrl.navigateRoot('/home', {
+      animated: true,
+      animationDirection: 'forward',
+    });
+  }
+
 
 }

@@ -140,4 +140,8 @@ export class HomePage implements OnInit, OnDestroy {
     this.dia = fecha.toLocaleDateString('es-ES', opcionesDia);
     this.horas = fecha.toLocaleTimeString('es-ES', opcionesHora);
   }
+
+  justificarAsistencia() {
+    this.navCtrl.navigateForward('/justificara'); 
+  }
 }

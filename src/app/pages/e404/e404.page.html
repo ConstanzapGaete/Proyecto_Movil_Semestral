@@ -1,19 +1,19 @@
-<ion-header>
-  <ion-title class="text-container">Página no Encontrada</ion-title>
-</ion-header>
-
 <ion-content class="ion-padding">
-  <div class="img-container">
-    <ion-img src="assets/img/error_404.svg"></ion-img>
-  </div>
-  <div class="message-container">
-    <p>la página que estás buscando no existe :c </p>
-  </div>
-</ion-content>
+  <section class="page_404">
+    <div class="container">
+      <div class="four_zero_four_bg">
+        <h1 class="text-center">404</h1>
+      </div>
 
-<ion-footer>
-  <ion-button routerLink="/login" expand="block" class="ion-margin button-center">
-    <ion-icon name="home" slot="start"></ion-icon>
-    Ir al Login
-  </ion-button>
-</ion-footer>
+      <div class="contant_box_404">
+        <h3 class="h2">Parece que estas perdido</h3>
+
+        <p>La pagina que estas buscando no existe</p>
+
+        <a [routerLink]="['/home']" class="link_404"
+          >Volver a la pagina de inicio</a
+        >
+      </div>
+    </div>
+  </section>
+</ion-content>

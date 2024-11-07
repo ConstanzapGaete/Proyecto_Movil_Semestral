@@ -1,60 +1,11 @@
-#welcome-container {
+#container {
     text-align: center;
     position: absolute;
+    left: 0;
+    right: 0;
     top: 50%;
     transform: translateY(-50%);
     animation: fadeIn 1.5s ease-in-out; /* esta es la animacion!!*/
-  }
-  
-  .attendance-container {
-    padding: 20px;
-  }
-  
-  .attendance-container h2 {
-    font-size: 24px;
-    margin-bottom: 20px;
-    color: #333;
-  }
-  
-  .attendance-list {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-  }
-  
-  .attendance-item {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    background-color: #f4f4f4;
-    padding: 15px;
-    border-radius: 8px;
-  }
-  
-  .attendance-item .subject {
-    font-weight: bold;
-    flex: 1;
-  }
-  
-  .attendance-item ion-progress-bar {
-    flex: 2;
-    --progress-background: #3880ff;
-    --buffer-background: #b2b2b2;
-    height: 10px;
-    border-radius: 5px;
-    margin: 0 15px;
-  }
-  
-  .attendance-item .percentage {
-    font-weight: bold;
-    min-width: 40px;
-    text-align: right;
-  }
-  
-  .camera-button {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
   }
   
   #container strong {
@@ -91,7 +42,6 @@
     font-weight: bold;
     margin-bottom: 10px;
     animation: slideDown 1s ease-out;
-    text-align: center;
   }
   
   .welcome-message {

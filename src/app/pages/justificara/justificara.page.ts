@@ -21,6 +21,9 @@ export class JustificaraPage implements OnInit {
 
   ngOnInit() {
   }
+  enableMenu() {
+    this.menuCtrl.enable(true);
+  }
 
   async cerrarSesion() {
     try {
@@ -42,21 +45,19 @@ export class JustificaraPage implements OnInit {
     await this.menuCtrl.close();
     window.open(url, '_blank');
   }
+  
 
-  ionViewWillEnter() {
-    this.menuCtrl.enable(true);
-  }
   fechaSeleccionada(event: any) {
     const fecha = event.detail.value;
     console.log("Fecha seleccionada:", fecha);
     
   }
-  irAlHome() {
-    this.navCtrl.navigateRoot('/home', {
-      animated: true,
-      animationDirection: 'forward',
-    });
+  async home() {
+    await this.menuCtrl.close();
+    this.navCtrl.navigateRoot('/homep', {});
   }
-
+  enviar() {
+    console.log("Formulario enviado");
+  }
 
 }

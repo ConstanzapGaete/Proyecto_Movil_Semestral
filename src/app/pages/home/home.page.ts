@@ -132,7 +132,6 @@ export class HomePage implements OnInit, OnDestroy {
     this.horas = fecha.toLocaleTimeString('es-ES', opcionesHora);
   }
 
-
   async Scan() {
     try {
       const data = await this.scan.Scannear();
@@ -153,11 +152,4 @@ export class HomePage implements OnInit, OnDestroy {
       );
     }
   }
-
-
-  async justificarAsistencia() {
-    await this.menuCtrl.close();
-    this.navCtrl.navigateForward('/justificara'); 
-  }
-
-
+}

@@ -1,6 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { NavController, MenuController } from '@ionic/angular';
 import { FirebaseService } from 'src/app/Services/firebase.service';
+import { BasededatosService } from 'src/app/Services/basededatos.service';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -15,7 +16,8 @@ export class AsignaturasPage implements OnInit, OnDestroy {
   constructor(
     private navCtrl: NavController,
     private firebaseService: FirebaseService,
-    private menuCtrl: MenuController
+    private menuCtrl: MenuController,
+    private basededatosService: BasededatosService
   ) {}
 
   ngOnInit() {

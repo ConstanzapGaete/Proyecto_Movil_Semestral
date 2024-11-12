@@ -46,6 +46,7 @@ export class HomePage implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
+    this.menuCtrl.close();
     if (this.authSubscription) {
       this.authSubscription.unsubscribe();
     }
@@ -141,7 +142,8 @@ export class HomePage implements OnInit, OnDestroy {
     this.horas = fecha.toLocaleTimeString('es-ES', opcionesHora);
   }
 
-  justificarAsistencia() {
+  async justificarAsistencia() {
+    await this.menuCtrl.close();
     this.navCtrl.navigateForward('/justificara'); 
   }
 }

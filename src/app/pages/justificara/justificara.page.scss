@@ -1,189 +1,68 @@
-#container {
-    text-align: center;
-    position: absolute;
-    left: 0;
-    right: 0;
-    top: 50%;
-    transform: translateY(-50%);
-    animation: fadeIn 1.5s ease-in-out; /* esta es la animacion!!*/
+/* Estilos para el encabezado */
+ion-header {
+  ion-toolbar {
+    --background: #014ba0; /* Color de fondo del toolbar */
+    --color: #def7ff;      /* Color del texto en el toolbar */
   }
-  
-  #container strong {
-    font-size: 20px;
-    line-height: 26px;
-  }
-  
-  #container p {
-    font-size: 16px;
-    line-height: 22px;
-    color: #8c8c8c;
-    margin: 0;
-  }
-  
-  #container a {
-    text-decoration: none;
-  }
-  /* Aquí los botones animados para editar */
-  .button-container {
+
+  .header-content {
     display: flex;
-    justify-content: space-around;
-    margin-top: 20px;
+    align-items: center;
+    padding: 10px 16px;
   }
-  
-  ion-button {
-    flex: 1;
-    margin: 0 5px;
-  }
-  
-  /* Aquí va la animacion de bienvenida para editar */
-  .welcome-text {
-    font-size: 24px;
-    color: #3880ff;
+
+  ion-title {
+    color: #def7ff;
     font-weight: bold;
-    margin-bottom: 10px;
-    animation: slideDown 1s ease-out;
+    font-size: 20px;
   }
-  
-  .welcome-message {
-    font-size: 18px;
-    color: #4a4a4a;
-    margin-bottom: 20px;
-    animation: fadeIn 2s ease-in-out;
-  }
-  
-  @keyframes slideDown {
-    0% {
-      transform: translateY(-50px);
-      opacity: 0;
-    }
-    100% {
-      transform: translateY(0);
-      opacity: 1;
-    }
-  }
-  
-  @keyframes fadeIn {
-    0% {
-      opacity: 0;
-    }
-    100% {
-      opacity: 1;
-    }
-  }
-  
-  /* botones de menu abajo */
-  .fixed-bottom {
-    position: absolute;
-    bottom: 0;
-    width: 100%;
-  }
-  
-  /* footer*/
-  ion-footer {
-    background: #014ba0;
-    padding: 20px 0;
-  
-    .footer-content {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding: 0 16px;
-    }
-  
-    .footer-links {
-      display: flex;
-      justify-content: center;
-      flex-wrap: wrap;
-      margin-bottom: 15px;
-  
-      a {
-        color: #def7ff;
-        text-decoration: none;
-        margin: 0 10px;
-        font-size: 14px;
-        transition: opacity 0.3s ease;
-  
-        &:hover {
-          opacity: 0.8;
-        }
-      }
-    }
-  
-    .social-icons {
-      display: flex;
-      justify-content: center;
-      margin-bottom: 15px;
-  
-      ion-icon {
-        font-size: 24px;
-        color: #def7ff;
-        margin: 0 10px;
-        cursor: pointer;
-        transition: opacity 0.3s ease;
-  
-        &:hover {
-          opacity: 0.8;
-        }
-      }
-    }
-  
-    .copyright {
-      color: #def7ff;
-      font-size: 12px;
-      text-align: center;
-    }
-  }
-  
-  @media (min-width: 768px) {
-    .login-form {
-      max-width: 400px;
-    }
-    ion-header {
-      .header-content {
-        justify-content: center;
-      }
-  
-      .header-logo {
-        width: 50px;
-        height: 50px;
-      }
-  
-      ion-title {
-        font-size: 24px;
-      }
-    }
-  
-    ion-footer {
-      .footer-links a {
-        font-size: 16px;
-      }
-  
-      .social-icons ion-icon {
-        font-size: 28px;
-      }
-  
-      .copyright {
-        font-size: 14px;
-      }
-    }
-  }
-  
-  ion-header {
-    ion-toolbar {
-      --background: #014ba0;
-      --color: #def7ff;
-    }
-  
-    .header-content {
-      display: flex;
-      align-items: center;
-      padding: 10px 16px;
-    }
-  
-    ion-title {
-      color: #def7ff;
-      font-weight: bold;
-      font-size: 20px;
-    }
-  }
-  
+}
+
+/* Contenedor centrado para el área de "Escribe un mensaje" */
+.centered-container {
+  margin-top: 20vh; /* Espacio desde la parte superior para centrar el contenido */
+  padding: 0 16px;  /* Padding horizontal */
+  text-align: center;
+}
+
+.centered-container ion-label {
+  display: block;
+  font-size: 16px;
+  margin-bottom: 8px;
+}
+
+.centered-container ion-textarea {
+  width: 100%;
+  --background: #f9f9f9;
+  border-radius: 8px;
+  margin-top: 8px;
+}
+
+/* Estilos para el contenedor de botones */
+.button-container {
+  display: flex;
+  justify-content: space-around;
+  padding: 16px;
+}
+
+.button-container ion-button {
+  flex: 1;
+  margin: 0 5px;
+  max-width: 120px;
+}
+
+/* Estilos para el botón "Enviar" */
+ion-button[expand="block"] {
+  width: 90%;
+  margin: 0 auto;
+}
+
+/* Estilos para el botón flotante "Home" */
+ion-fab-button {
+  --background: #3880ff;
+}
+
+/* Estilos generales */
+ion-content {
+  --background: #ffffff;
+}

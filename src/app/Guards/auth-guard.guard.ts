@@ -34,13 +34,6 @@ export class AuthGuard implements CanActivate {
 
     return this.firebaseService.getAuthState().pipe(
       take(1),
-      tap((user) => {
-        console.log('Auth State User:', user);
-        console.log('Required Type:', requiredType);
-        if (user) {
-          console.log('User email:', user.email);
-        }
-      }),
       map((user) => {
         if (!user) {
           console.log('Usuario no encontrado, redirigiendo al login');
@@ -48,17 +41,11 @@ export class AuthGuard implements CanActivate {
         }
 
         const userType = this.getUserType(user.email);
-        console.log('Determinando tipo de usuario:', userType);
 
         if (requiredType && requiredType !== userType) {
-          console.log(
-            'Usuario sin coincidencias, redireccionando:',
-            this.ROUTES[userType]
-          );
           return this.router.createUrlTree([this.ROUTES[userType]]);
         }
 
-        console.log('Acceso correcto');
         return true;
       })
     );

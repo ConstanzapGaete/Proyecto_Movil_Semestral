@@ -59,56 +59,57 @@
       <ion-title size="large">RegistrAPP</ion-title>
     </ion-toolbar>
   </ion-header>
-  <ion-card id="Arquitectura">
+  <ion-card id="Arquitectura de software">
     <ion-card-header>
-      <ion-card-title>Arquitectura</ion-card-title>
+      <ion-card-title>Arquitectura de software</ion-card-title>
       <ion-card-subtitle>ASY4131</ion-card-subtitle>
     </ion-card-header>
 
     <qr-code
-      *ngIf="MostrarqrId === 'Arquitectura'"
-      value="ASY4131"
+      *ngIf="MostrarqrId === 'Arquitectura de software'"
+      [value]="qrvalor"
       size="300"
       errorCorrectionLevel="M"
     ></qr-code>
     <br />
-    <ion-button (click)="mostrarqr('Arquitectura')"
+    <ion-button (click)="mostrarqr('Arquitectura de software','ASY4131')"
       >Registrar Asistencia</ion-button
     >
   </ion-card>
 
-  <ion-card id="moviles">
+  <ion-card id="Programación de aplicaciones móviles">
     <ion-card-header>
       <ion-card-title>Programación de aplicaciones móviles</ion-card-title>
       <ion-card-subtitle>PGY4121</ion-card-subtitle>
     </ion-card-header>
 
-
     <qr-code
-      *ngIf="MostrarqrId === 'moviles'"
-      value="PGY4121"
+      *ngIf="MostrarqrId === 'Programación de aplicaciones móviles'"
+      [value]="qrvalor"
       size="300"
       errorCorrectionLevel="M"
     ></qr-code>
     <br />
-    <ion-button (click)="mostrarqr('moviles')">Registrar Asistencia</ion-button>
+    <ion-button
+      (click)="mostrarqr('Programación de aplicaciones móviles','PGY4121')"
+      >Registrar Asistencia</ion-button
+    >
   </ion-card>
 
-  <ion-card id="Software">
+  <ion-card id="Calidad de Software">
     <ion-card-header>
       <ion-card-title>Calidad de Software</ion-card-title>
       <ion-card-subtitle>CSY4111</ion-card-subtitle>
     </ion-card-header>
 
-
     <qr-code
-      *ngIf="MostrarqrId === 'Software'"
-      value="CSY4111"
+      *ngIf="MostrarqrId === 'Calidad de Software'"
+      [value]="qrvalor"
       size="300"
       errorCorrectionLevel="M"
     ></qr-code>
     <br />
-    <ion-button (click)="mostrarqr('Software')"
+    <ion-button (click)="mostrarqr('Calidad de Software', 'CSY4111')"
       >Registrar Asistencia</ion-button
     >
   </ion-card>

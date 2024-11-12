@@ -6,8 +6,6 @@ import {
   setDoc,
   doc,
   getDoc,
-  updateDoc,
-  arrayUnion,
 } from 'firebase/firestore';
 
 @Injectable({
@@ -90,17 +88,15 @@ export class BasededatosService {
         const claseData = docSnap.data();
         const estudiantes = claseData?.['estudiantes'] || [];
 
-        const nuevaAsistencia = {
+        estudiantes.push({
           email: alumnoEmail,
           fecha: new Date(),
           hora,
           estado,
           ubicacionalumno,
-        };
-
-        await updateDoc(docRef, {
-          estudiantes: arrayUnion(nuevaAsistencia),
         });
+
+        await setDoc(docRef, { estudiantes }, { merge: true });
         console.log('Asistencia registrada con éxito');
       }
     } catch (error) {

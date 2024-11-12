@@ -140,7 +140,7 @@ export class HomePage implements OnInit, OnDestroy {
       const data = await this.scan.Scannear();
       const datos = JSON.parse(data);
       this.id = datos.id;
-      this.asingatura = datos.asingatura;
+      this.asingatura = datos.Asignatura;
       console.log('Datos:', datos);
       this.basedeatosService.registrarAsistencia(
         this.asingatura,

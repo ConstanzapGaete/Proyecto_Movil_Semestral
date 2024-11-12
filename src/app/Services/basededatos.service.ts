@@ -8,13 +8,12 @@ import {
   getDoc,
 } from 'firebase/firestore';
 
-import { v4 as uuidv4 } from 'uuid';
-
 @Injectable({
   providedIn: 'root',
 })
 export class BasededatosService {
   private db = getFirestore();
+  path: string = '';
 
   constructor() {}
 
@@ -22,7 +21,6 @@ export class BasededatosService {
     try {
       const docRef = await addDoc(collection(this.db, path), data);
       return docRef.id;
-      console.log('Documento agregado con ID: ', docRef.id);
     } catch (error) {
       console.error('Error al agregar documento: ', error);
       return null;
@@ -60,7 +58,10 @@ export class BasededatosService {
     };
 
     try {
-      const docId = await this.agregarDocumento(`clases`, claseData);
+      const docId = await this.agregarDocumento(
+        claseData.asignatura,
+        claseData
+      );
       console.log('Clase registrada con éxito');
       return docId;
     } catch (error) {
@@ -70,6 +71,7 @@ export class BasededatosService {
   }
 
   async registrarAsistencia(
+    asignatura: string,
     docId: string,
     alumnoEmail: string,
     ubicacionalumno: string,
@@ -77,7 +79,8 @@ export class BasededatosService {
     estado: string
   ) {
     try {
-      const docRef = doc(this.db, `clases/${docId}`);
+      this.path = asignatura + '/' + docId;
+      const docRef = doc(this.db, `${this.path}`);
       const docSnap = await getDoc(docRef);
 
       if (docSnap.exists()) {

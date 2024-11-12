@@ -19,9 +19,11 @@ export class JustificaraPage implements OnInit, OnDestroy {
   constructor(
     private navCtrl: NavController,
     private firebaseService: FirebaseService,
+
     private menuCtrl: MenuController,
     private alertController: AlertController
   ) { }
+
 
   ngOnInit() {
     this.menuCtrl.enable(true);

@@ -1,23 +1,23 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { NavController, MenuController } from '@ionic/angular';
 import { FirebaseService } from 'src/app/Services/firebase.service';
-import { BasededatosService } from 'src/app/Services/basededatos.service';
+import { AlertController } from '@ionic/angular';
 import { Subscription } from 'rxjs';
 
 @Component({
-  selector: 'app-asignaturas',
-  templateUrl: './asignaturas.page.html',
-  styleUrls: ['./asignaturas.page.scss'],
+  selector: 'app-justificara',
+  templateUrl: './justificara.page.html',
+  styleUrls: ['./justificara.page.scss'],
 })
-export class AsignaturasPage implements OnInit, OnDestroy {
-  nombreUsuario: string = 'Invitado';
+export class JustificaraPage implements OnInit, OnDestroy {
   private authSubscription: Subscription;
-  MostrarqrId: string | null = null;
+  nombreUsuario: string = 'Invitado';
+
   constructor(
     private navCtrl: NavController,
     private firebaseService: FirebaseService,
     private menuCtrl: MenuController,
-    private basededatosService: BasededatosService
+    private alertController: AlertController
   ) {}
 
   ngOnInit() {
@@ -54,26 +54,17 @@ export class AsignaturasPage implements OnInit, OnDestroy {
     }
   }
 
-  async asignaturas() {
-    await this.menuCtrl.close();
-    this.navCtrl.navigateRoot('/asignaturas', {});
-  }
-
   async home() {
     await this.menuCtrl.close();
-    this.navCtrl.navigateRoot('/homep', {});
+    this.navCtrl.navigateRoot('/home', {});
+  }
+
+  async justificarAsistencia() {
+    await this.menuCtrl.close();
+    this.navCtrl.navigateForward('/justificara', {});
   }
 
   async abrirEnlace(url: string) {
     window.open(url, '_blank');
-  }
-
-  async mostrarqr(idCard: string) {
-    this.MostrarqrId = idCard;
-    setTimeout(() => {
-      if (this.MostrarqrId === idCard) {
-        this.MostrarqrId = null;
-      }
-    }, 10000);
   }
 }

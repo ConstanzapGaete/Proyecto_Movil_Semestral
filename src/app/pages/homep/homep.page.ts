@@ -43,10 +43,6 @@ export class HomepPage implements OnInit, OnDestroy {
     }
   }
 
-  enableMenu() {
-    this.menuCtrl.enable(true);
-  }
-
   async cerrarSesion() {
     await this.menuCtrl.close();
     this.firebaseService.signOut().subscribe({

@@ -1,14 +1,14 @@
-
 /* Estilos para el encabezado */
 ion-header {
   ion-toolbar {
     --background: #014ba0; /* Color de fondo del toolbar */
-    --color: #def7ff;      /* Color del texto en el toolbar */
+    --color: #def7ff; /* Color del texto en el toolbar */
   }
 
   .header-content {
     display: flex;
-
+  }
+}
 #container {
   text-align: center;
   position: absolute;
@@ -199,11 +199,10 @@ ion-header {
   }
 }
 
-
 /* Contenedor centrado para el área de "Escribe un mensaje" */
 .centered-container {
   margin-top: 20vh; /* Espacio desde la parte superior para centrar el contenido */
-  padding: 0 16px;  /* Padding horizontal */
+  padding: 0 16px; /* Padding horizontal */
   text-align: center;
 }
 
@@ -248,4 +247,3 @@ ion-fab-button {
 ion-content {
   --background: #ffffff;
 }
-

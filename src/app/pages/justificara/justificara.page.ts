@@ -1,19 +1,9 @@
-
-import { Component, OnInit ,OnDestroy} from '@angular/core';
-import { NavController, MenuController} from '@ionic/angular';
-import { FirebaseService } from 'src/app/Services/firebase.service';
-import { AlertController } from '@ionic/angular';
-import { Subscription } from 'rxjs';
-import { Filesystem, Directory, Encoding } from '@capacitor/filesystem';
-
-
-
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { NavController, MenuController } from '@ionic/angular';
 import { FirebaseService } from 'src/app/Services/firebase.service';
 import { AlertController } from '@ionic/angular';
 import { Subscription } from 'rxjs';
-
+import { Filesystem, Directory, Encoding } from '@capacitor/filesystem';
 
 @Component({
   selector: 'app-justificara',
@@ -21,13 +11,10 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./justificara.page.scss'],
 })
 export class JustificaraPage implements OnInit, OnDestroy {
-
   mensaje: string = '';
   private authSubscription: Subscription;
 
-  private authSubscription: Subscription;
   nombreUsuario: string = 'Invitado';
-
 
   constructor(
     private navCtrl: NavController,
@@ -37,7 +24,6 @@ export class JustificaraPage implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
-
     this.menuCtrl.enable(true);
 
     this.authSubscription = this.firebaseService
@@ -51,12 +37,6 @@ export class JustificaraPage implements OnInit, OnDestroy {
       });
   }
 
-  ngOnDestroy() {
-    if (this.authSubscription) {
-      this.authSubscription.unsubscribe();
-    }
-
-  }
   ngOnDestroy() {
     this.menuCtrl.close();
     if (this.authSubscription) {
@@ -80,12 +60,11 @@ export class JustificaraPage implements OnInit, OnDestroy {
     }
   }
 
-  
   async subirDocumento() {
     try {
       const fileInput = document.createElement('input');
       fileInput.type = 'file';
-      fileInput.accept = 'image/*,.pdf'; 
+      fileInput.accept = 'image/*,.pdf';
 
       fileInput.onchange = async () => {
         const file = fileInput.files![0];
@@ -94,13 +73,12 @@ export class JustificaraPage implements OnInit, OnDestroy {
         reader.onload = async () => {
           const base64Data = reader.result as string;
 
-          
           const extension = file.type.includes('image') ? 'jpeg' : 'pdf';
           const fileName = `documento_${Date.now()}.${extension}`;
           await Filesystem.writeFile({
             path: fileName,
-            data: base64Data.split(',')[1], 
-            directory: Directory.Documents
+            data: base64Data.split(',')[1],
+            directory: Directory.Documents,
           });
 
           console.log(`${fileName} guardado `);
@@ -113,17 +91,10 @@ export class JustificaraPage implements OnInit, OnDestroy {
       console.error('Error al subir el documento:', error);
     }
   }
-  
 
-  async abrirEnlace(url: string) {
-    await this.menuCtrl.close();
-    window.open(url, '_blank');
-  }
   ionViewWillEnter() {
     this.menuCtrl.enable(true);
   }
-
-
 
   async home() {
     await this.menuCtrl.close();

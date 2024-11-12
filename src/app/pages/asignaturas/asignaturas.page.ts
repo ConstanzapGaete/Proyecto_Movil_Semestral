@@ -130,7 +130,6 @@ export class AsignaturasPage implements OnInit, OnDestroy {
       this.nombreUsuario,
       this.ubicacion
     );
-    console.log(id);
     const Jsoninfo = {
       id: id,
       Asignatura: this.asignatura,

@@ -14,6 +14,7 @@ import { BasededatosService } from 'src/app/Services/basededatos.service';
   styleUrls: ['./home.page.scss'],
 })
 export class HomePage implements OnInit, OnDestroy {
+  asingatura: string = '';
   estado: string = 'ausente';
   id: string = '';
   nombreUsuario: string = 'Invitado';
@@ -139,8 +140,10 @@ export class HomePage implements OnInit, OnDestroy {
       const data = await this.scan.Scannear();
       const datos = JSON.parse(data);
       this.id = datos.id;
+      this.asingatura = datos.asingatura;
       console.log('Datos:', datos);
       this.basedeatosService.registrarAsistencia(
+        this.asingatura,
         this.id,
         this.nombreUsuario,
         this.ubicacion,

@@ -5,7 +5,6 @@ import { Subscription } from 'rxjs';
 import { AlertController } from '@ionic/angular';
 import { Geolocation } from '@capacitor/geolocation';
 import { GeocodingService } from 'src/app/Services/geolocalizacion.service';
-import { BrowserMultiFormatReader } from '@zxing/browser';
 
 @Component({
   selector: 'app-home',
@@ -42,6 +41,10 @@ export class HomePage implements OnInit, OnDestroy {
     this.obtenerFecha();
   }
 
+  ionViewWillEnter() {
+    this.menuCtrl.enable(true, 'first');
+  }
+
   ngOnDestroy() {
     if (this.authSubscription) {
       this.authSubscription.unsubscribe();
@@ -65,6 +68,14 @@ export class HomePage implements OnInit, OnDestroy {
     }
   }
 
+  async justificarAsistencia() {
+    await this.menuCtrl.close();
+    this.navCtrl.navigateForward('/justificara', {});
+  }
+  async home() {
+    await this.menuCtrl.close();
+    this.navCtrl.navigateRoot('/home', {});
+  }
   async abrirEnlace(url: string) {
     await this.menuCtrl.close();
     window.open(url, '_blank');
@@ -79,9 +90,6 @@ export class HomePage implements OnInit, OnDestroy {
     await alert.present();
   }
 
-  ionViewWillEnter() {
-    this.menuCtrl.enable(true);
-  }
   extraerNombre(email: string): string {
     const nombre = email.split('@')[0];
     return nombre.charAt(0).toUpperCase() + nombre.slice(1);
@@ -117,9 +125,5 @@ export class HomePage implements OnInit, OnDestroy {
     this.fechaa = fecha.toLocaleDateString('es-ES', opcionesFecha);
     this.dia = fecha.toLocaleDateString('es-ES', opcionesDia);
     this.horas = fecha.toLocaleTimeString('es-ES', opcionesHora);
-  }
-
-  justificarAsistencia() {
-    this.navCtrl.navigateForward('/justificara');
   }
 }

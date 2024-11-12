@@ -1,3 +1,4 @@
+
 import { Component, OnInit ,OnDestroy} from '@angular/core';
 import { NavController, MenuController} from '@ionic/angular';
 import { FirebaseService } from 'src/app/Services/firebase.service';
@@ -7,24 +8,54 @@ import { Filesystem, Directory, Encoding } from '@capacitor/filesystem';
 
 
 
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { NavController, MenuController } from '@ionic/angular';
+import { FirebaseService } from 'src/app/Services/firebase.service';
+import { AlertController } from '@ionic/angular';
+import { Subscription } from 'rxjs';
+
+
 @Component({
   selector: 'app-justificara',
   templateUrl: './justificara.page.html',
   styleUrls: ['./justificara.page.scss'],
 })
 export class JustificaraPage implements OnInit, OnDestroy {
+
   mensaje: string = '';
   private authSubscription: Subscription;
+
+  private authSubscription: Subscription;
+  nombreUsuario: string = 'Invitado';
+
 
   constructor(
     private navCtrl: NavController,
     private firebaseService: FirebaseService,
     private menuCtrl: MenuController,
     private alertController: AlertController
-  ) { }
+  ) {}
 
   ngOnInit() {
+
     this.menuCtrl.enable(true);
+
+    this.authSubscription = this.firebaseService
+      .getAuthState()
+      .subscribe((user) => {
+        if (user) {
+          this.nombreUsuario = user.email || 'Usuario';
+        } else {
+          this.nombreUsuario = 'Invitado';
+        }
+      });
+  }
+
+  ngOnDestroy() {
+    if (this.authSubscription) {
+      this.authSubscription.unsubscribe();
+    }
+
   }
   ngOnDestroy() {
     this.menuCtrl.close();
@@ -35,7 +66,6 @@ export class JustificaraPage implements OnInit, OnDestroy {
 
   async cerrarSesion() {
     try {
-      await this.menuCtrl.close();
       this.firebaseService.signOut().subscribe({
         next: () => {
           console.log('Sesión cerrada exitosamente');
@@ -49,6 +79,7 @@ export class JustificaraPage implements OnInit, OnDestroy {
       console.error('Error al cerrar el menú:', error);
     }
   }
+
   
   async subirDocumento() {
     try {
@@ -93,12 +124,18 @@ export class JustificaraPage implements OnInit, OnDestroy {
   }
 
 
+
   async home() {
     await this.menuCtrl.close();
-    this.navCtrl.navigateRoot('/homep', {});
-  }
-  enviar() {
-    console.log("Formulario enviado");
+    this.navCtrl.navigateRoot('/home', {});
   }
 
+  async justificarAsistencia() {
+    await this.menuCtrl.close();
+    this.navCtrl.navigateForward('/justificara', {});
+  }
+
+  async abrirEnlace(url: string) {
+    window.open(url, '_blank');
+  }
 }

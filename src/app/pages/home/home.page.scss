@@ -101,6 +101,63 @@ ion-button {
   animation: fadeIn 2s ease-in-out;
 }
 
+body.scanner-active {
+  --background: transparent;
+  --ion-background-color: transparent;
+  background: transparent;
+}
+
+.hidden {
+  display: none;
+}
+
+.scanner-active {
+  ion-header,
+  ion-footer,
+  ion-fab,
+  #container,
+  .welcome-container,
+  .attendance-container {
+    display: none;
+  }
+}
+.scan-area {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: transparent;
+  z-index: 100;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.scan-box {
+  width: 80%;
+  height: 60%;
+  border: 2px solid #fff;
+  border-radius: 10px;
+  box-shadow: 0 0 0 100vmax rgba(0, 0, 0, 0.5);
+}
+
+.scanner-hide {
+  display: none !important;
+}
+
+:host {
+  &.scanner-active {
+    --background: transparent;
+    --ion-background-color: transparent;
+    background: transparent;
+  }
+}
+
+ion-content.scanner-active {
+  --background: transparent;
+}
+
 @keyframes slideDown {
   0% {
     transform: translateY(-50px);

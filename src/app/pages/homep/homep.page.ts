@@ -80,7 +80,6 @@ export class HomepPage implements OnInit, OnDestroy {
       const coordinates = await Geolocation.getCurrentPosition();
       this.latitud = coordinates.coords.latitude;
       this.longitud = coordinates.coords.longitude;
-      console.log('Latitud:', this.latitud, 'Longitud:', this.longitud);
       this.ubicacion = await this.ubi.getLocation(this.latitud, this.longitud);
     } catch (error) {
       console.error('Error al obtener ubicación:', error);

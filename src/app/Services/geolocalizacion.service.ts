@@ -22,8 +22,7 @@ export class GeocodingService {
 
       const { address } = response.data;
       const country = address.country || 'Desconocido';
-      const comuna = address.suburb || address.neighborhood || 'Sin comuna';
-      console.log({ address });
+      const comuna = address.city || address.neighborhood || 'Sin comuna';
       return ` ${comuna}, ${country}`;
     } catch (error) {
       console.error('Error buscando localizacion:', error);

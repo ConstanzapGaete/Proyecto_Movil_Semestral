@@ -1,10 +1,12 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, inject } from '@angular/core';
 import { NavController, MenuController } from '@ionic/angular';
 import { FirebaseService } from 'src/app/Services/firebase.service';
 import { Subscription } from 'rxjs';
 import { AlertController } from '@ionic/angular';
 import { Geolocation } from '@capacitor/geolocation';
 import { GeocodingService } from 'src/app/Services/geolocalizacion.service';
+import { ScanService } from 'src/app/Services/scan.service';
+import { BasededatosService } from 'src/app/Services/basededatos.service';
 
 @Component({
   selector: 'app-home',
@@ -22,13 +24,15 @@ export class HomePage implements OnInit, OnDestroy {
   fechaa: string = '';
   horas: string = '';
   ubicacion: string = '';
-
+  isScannerActive: boolean = false;
+  private scan = inject(ScanService);
   constructor(
     private navCtrl: NavController,
     private firebaseService: FirebaseService,
     private menuCtrl: MenuController,
     private alertController: AlertController,
-    private ubi: GeocodingService
+    private ubi: GeocodingService,
+    private basedeatosService: BasededatosService
   ) {}
 
   async ngOnInit() {
@@ -49,6 +53,7 @@ export class HomePage implements OnInit, OnDestroy {
     if (this.authSubscription) {
       this.authSubscription.unsubscribe();
     }
+    this.isScannerActive = false;
   }
 
   async cerrarSesion() {
@@ -100,7 +105,6 @@ export class HomePage implements OnInit, OnDestroy {
       const coordinates = await Geolocation.getCurrentPosition();
       this.latitud = coordinates.coords.latitude;
       this.longitud = coordinates.coords.longitude;
-      console.log('Latitud:', this.latitud, 'Longitud:', this.longitud);
       this.ubicacion = await this.ubi.getLocation(this.latitud, this.longitud);
     } catch (error) {
       console.error('Error al obtener ubicación:', error);
@@ -125,5 +129,26 @@ export class HomePage implements OnInit, OnDestroy {
     this.fechaa = fecha.toLocaleDateString('es-ES', opcionesFecha);
     this.dia = fecha.toLocaleDateString('es-ES', opcionesDia);
     this.horas = fecha.toLocaleTimeString('es-ES', opcionesHora);
+  }
+
+  async Scan() {
+    try {
+      const data = await this.scan.Scannear();
+      const datos = JSON.parse(data);
+      console.log('Datos:', datos);
+
+      if (data) {
+        await this.presentAlert(
+          'Éxito',
+          'Se registró la asistencia con éxito.'
+        );
+      }
+    } catch (error) {
+      console.error('Error al escanear:', error);
+      await this.presentAlert(
+        'Error',
+        'Hubo un problema al registrar la asistencia.'
+      );
+    }
   }
 }

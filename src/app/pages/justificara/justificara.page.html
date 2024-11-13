@@ -21,19 +21,6 @@
     <ion-textarea placeholder="Escribe aquí tu justificación..." [(ngModel)]="mensaje"></ion-textarea>
   </div>
 
-  <!-- Lista de ausencias -->
-  <ion-list>
-    <ion-list-header>
-      <ion-label>Fechas de Ausencias</ion-label>
-    </ion-list-header>
-    <ion-item *ngFor="let ausencia of ausencias">
-      <ion-label>
-        <h2>{{ ausencia.fecha }}</h2>
-        <p>{{ ausencia.asignatura }}</p>
-      </ion-label>
-    </ion-item>
-  </ion-list>
-
   <div style="display: flex; justify-content: center; padding: 16px;">
     <ion-button color="primary" fill="outline" expand="block" (click)="subirDocumento()" style="max-width: 90%;">
       <ion-icon slot="start" name="document-text-outline"></ion-icon>

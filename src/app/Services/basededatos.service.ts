@@ -6,7 +6,6 @@ import {
   setDoc,
   doc,
   getDoc,
-  getDocs
 } from 'firebase/firestore';
 
 @Injectable({
@@ -104,29 +103,5 @@ export class BasededatosService {
       console.error('Error al registrar asistencia:', error);
       throw error;
     }
-  }
-
-  async obtenerFechasAusentes(alumnoEmail: string): Promise<{ fecha: string; asignatura: string }[]> {
-    const ausencias: { fecha: string; asignatura: string }[] = [];
-  
-    try {
-      const querySnapshot = await getDocs(collection(this.db, 'asignaturas'));
-      querySnapshot.forEach((doc) => {
-        const claseData = doc.data();
-        const estudiantes = claseData['estudiantes'] || [];
-  
-        estudiantes.forEach((estudiante: any) => {
-          if (estudiante.email === alumnoEmail && estudiante.estado === 'ausente') {
-            ausencias.push({
-              fecha: estudiante.fecha.toDate().toLocaleDateString(),
-              asignatura: claseData['asignatura'] || 'Desconocida',
-            });
-          }
-        });
-      });
-    } catch (error) {
-      console.error("Error al obtener las fechas de ausencias:", error);
-    }
-    return ausencias;
   }
 }

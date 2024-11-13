@@ -1,11 +1,10 @@
-import { Component, OnInit ,OnDestroy} from '@angular/core';
-import { NavController, MenuController} from '@ionic/angular';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { NavController, MenuController } from '@ionic/angular';
 import { FirebaseService } from 'src/app/Services/firebase.service';
 import { AlertController } from '@ionic/angular';
 import { Subscription } from 'rxjs';
-import { Filesystem, Directory, Encoding } from '@capacitor/filesystem';
-
-
+import { Filesystem, Directory } from '@capacitor/filesystem';
+import { BasededatosService } from 'src/app/Services/basededatos.service';
 
 @Component({
   selector: 'app-justificara',
@@ -15,24 +14,29 @@ import { Filesystem, Directory, Encoding } from '@capacitor/filesystem';
 export class JustificaraPage implements OnInit, OnDestroy {
   mensaje: string = '';
   private authSubscription: Subscription;
-
+  ausencias: { fecha: string; asignatura: string }[] = [];
   constructor(
     private navCtrl: NavController,
     private firebaseService: FirebaseService,
-
+    private basededatosService: BasededatosService,
     private menuCtrl: MenuController,
     private alertController: AlertController
-  ) { }
-
+  ) {}
 
   ngOnInit() {
     this.menuCtrl.enable(true);
   }
   ngOnDestroy() {
     this.menuCtrl.close();
-    if (this.authSubscription) {
-      this.authSubscription.unsubscribe();
-    }
+    this.authSubscription = this.firebaseService
+      .getAuthState()
+      .subscribe(async (user) => {
+        if (user?.email) {
+          this.ausencias = await this.basededatosService.obtenerFechasAusentes(
+            user.email
+          );
+        }
+      });
   }
 
   async cerrarSesion() {
@@ -51,13 +55,13 @@ export class JustificaraPage implements OnInit, OnDestroy {
       console.error('Error al cerrar el menú:', error);
     }
   }
-  
+
   async subirDocumento() {
     try {
       const fileInput = document.createElement('input');
       fileInput.type = 'file';
-      fileInput.accept = 'image/*,.pdf'; 
-
+      fileInput.accept = 'image/*,.pdf';
+      fileInput.accept = 'image/*,.pdf';
       fileInput.onchange = async () => {
         const file = fileInput.files![0];
         const reader = new FileReader();
@@ -65,13 +69,12 @@ export class JustificaraPage implements OnInit, OnDestroy {
         reader.onload = async () => {
           const base64Data = reader.result as string;
 
-          
           const extension = file.type.includes('image') ? 'jpeg' : 'pdf';
           const fileName = `documento_${Date.now()}.${extension}`;
           await Filesystem.writeFile({
             path: fileName,
-            data: base64Data.split(',')[1], 
-            directory: Directory.Documents
+            data: base64Data.split(',')[1],
+            directory: Directory.Documents,
           });
 
           console.log(`${fileName} guardado `);
@@ -84,7 +87,6 @@ export class JustificaraPage implements OnInit, OnDestroy {
       console.error('Error al subir el documento:', error);
     }
   }
-  
 
   async abrirEnlace(url: string) {
     await this.menuCtrl.close();
@@ -94,13 +96,11 @@ export class JustificaraPage implements OnInit, OnDestroy {
     this.menuCtrl.enable(true);
   }
 
-
   async home() {
     await this.menuCtrl.close();
     this.navCtrl.navigateRoot('/homep', {});
   }
   enviar() {
-    console.log("Formulario enviado");
+    console.log('Formulario enviado');
   }
-
 }

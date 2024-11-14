@@ -15,6 +15,8 @@ export class JustificaraPage implements OnInit, OnDestroy {
   mensaje: string = '';
   private authSubscription: Subscription;
   ausencias: { fecha: string; asignatura: string }[] = [];
+  documentoSubido: boolean = false; 
+
   constructor(
     private navCtrl: NavController,
     private firebaseService: FirebaseService,
@@ -61,7 +63,6 @@ export class JustificaraPage implements OnInit, OnDestroy {
       const fileInput = document.createElement('input');
       fileInput.type = 'file';
       fileInput.accept = 'image/*,.pdf';
-      fileInput.accept = 'image/*,.pdf';
       fileInput.onchange = async () => {
         const file = fileInput.files![0];
         const reader = new FileReader();
@@ -78,6 +79,7 @@ export class JustificaraPage implements OnInit, OnDestroy {
           });
 
           console.log(`${fileName} guardado `);
+          this.documentoSubido = true;
         };
         reader.readAsDataURL(file);
       };
@@ -87,6 +89,22 @@ export class JustificaraPage implements OnInit, OnDestroy {
       console.error('Error al subir el documento:', error);
     }
   }
+
+  async enviar() {
+    
+    if (!this.mensaje && !this.documentoSubido) {
+      const alert = await this.alertController.create({
+        header: 'Advertencia',
+        message: 'Debes enviar al menos un documento o escribir un mensaje.',
+        buttons: ['OK'],
+      });
+      await alert.present();
+    } else {
+      console.log('Formulario enviado ');
+      
+    }
+  }
+
 
   async abrirEnlace(url: string) {
     await this.menuCtrl.close();
@@ -100,7 +118,5 @@ export class JustificaraPage implements OnInit, OnDestroy {
     await this.menuCtrl.close();
     this.navCtrl.navigateRoot('/homep', {});
   }
-  enviar() {
-    console.log('Formulario enviado');
-  }
+  
 }

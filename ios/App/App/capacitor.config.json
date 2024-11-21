@@ -1,0 +1,15 @@
+{
+	"appId": "io.ionic.starter",
+	"appName": "Proyecto_semestral",
+	"webDir": "www",
+	"packageClassList": [
+		"AppPlugin",
+		"CapacitorBarcodeScannerPlugin",
+		"FilesystemPlugin",
+		"GeolocationPlugin",
+		"HapticsPlugin",
+		"KeyboardPlugin",
+		"PushNotificationsPlugin",
+		"StatusBarPlugin"
+	]
+}

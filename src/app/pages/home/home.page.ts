@@ -2,7 +2,11 @@ import { Component, OnInit, OnDestroy, inject } from '@angular/core';
 import { NavController, MenuController } from '@ionic/angular';
 import { FirebaseService } from 'src/app/Services/firebase.service';
 import { Subscription } from 'rxjs';
-import { AlertController } from '@ionic/angular';
+import {
+  AlertController,
+  ToastController,
+  LoadingController,
+} from '@ionic/angular';
 import { Geolocation } from '@capacitor/geolocation';
 import { GeocodingService } from 'src/app/Services/geolocalizacion.service';
 import { ScanService } from 'src/app/Services/scan.service';
@@ -35,7 +39,9 @@ export class HomePage implements OnInit, OnDestroy {
     private menuCtrl: MenuController,
     private alertController: AlertController,
     private ubi: GeocodingService,
-    private basedeatosService: BasededatosService
+    private basedeatosService: BasededatosService,
+    private toastController: ToastController,
+    private loadingController: LoadingController
   ) {}
 
   async ngOnInit() {
@@ -61,19 +67,56 @@ export class HomePage implements OnInit, OnDestroy {
   }
 
   async cerrarSesion() {
+    const loading = await this.loadingController.create({
+      message: 'Cerrando sesión...',
+      spinner: 'crescent',
+    });
+    await loading.present();
+
     try {
-      await this.menuCtrl.close();
       this.firebaseService.signOut().subscribe({
-        next: () => {
+        next: async () => {
           console.log('Sesión cerrada exitosamente');
+
+          await loading.dismiss();
+
+          const toast = await this.toastController.create({
+            message: 'Sesión cerrada exitosamente',
+            duration: 2000,
+            position: 'bottom',
+            color: 'success',
+          });
+          await toast.present();
+
           this.navCtrl.navigateRoot('/login', {
             animated: true,
             animationDirection: 'forward',
           });
         },
+        error: async (error) => {
+          console.error('Error al cerrar sesión:', error);
+
+          await loading.dismiss();
+          const toast = await this.toastController.create({
+            message: 'Error al cerrar sesión. Inténtalo de nuevo.',
+            duration: 2000,
+            position: 'bottom',
+            color: 'danger',
+          });
+          await toast.present();
+        },
       });
     } catch (error) {
       console.error('Error al cerrar el menú:', error);
+
+      await loading.dismiss();
+      const toast = await this.toastController.create({
+        message: 'Error al cerrar sesión. Inténtalo de nuevo.',
+        duration: 2000,
+        position: 'bottom',
+        color: 'danger',
+      });
+      await toast.present();
     }
   }
 

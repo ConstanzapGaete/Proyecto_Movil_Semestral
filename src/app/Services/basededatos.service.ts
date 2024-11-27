@@ -119,7 +119,7 @@ export class BasededatosService {
         estudiantes.forEach((estudiante: any) => {
           if (
             estudiante.email === alumnoEmail &&
-            estudiante.estado === 'ausente'
+            estudiante.estado === 'Presente'
           ) {
             ausencias.push({
               fecha: estudiante.fecha.toDate().toLocaleDateString(),

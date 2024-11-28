@@ -18,8 +18,9 @@ import { BasededatosService } from 'src/app/Services/basededatos.service';
   styleUrls: ['./home.page.scss'],
 })
 export class HomePage implements OnInit, OnDestroy {
+  estado: string = 'Presente';
+  correo: string = '';
   asingatura: string = '';
-  estado: string = 'ausente';
   id: string = '';
   nombreUsuario: string = 'Invitado';
   private authSubscription: Subscription;
@@ -49,6 +50,7 @@ export class HomePage implements OnInit, OnDestroy {
       .getAuthState()
       .subscribe((user) => {
         this.nombreUsuario = user ? this.extraerNombre(user.email) : 'Invitado';
+        this.correo = user.email;
       });
     await this.ObtenerUbicacion();
     this.obtenerFecha();
@@ -188,6 +190,7 @@ export class HomePage implements OnInit, OnDestroy {
       this.basedeatosService.registrarAsistencia(
         this.asingatura,
         this.id,
+        this.correo,
         this.nombreUsuario,
         this.ubicacion,
         this.horas,

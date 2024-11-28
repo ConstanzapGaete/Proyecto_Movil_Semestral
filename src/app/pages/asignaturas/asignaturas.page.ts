@@ -4,6 +4,7 @@ import {
   MenuController,
   LoadingController,
   ToastController,
+  AlertController,
 } from '@ionic/angular';
 import { FirebaseService } from 'src/app/Services/firebase.service';
 import { BasededatosService } from 'src/app/Services/basededatos.service';
@@ -38,7 +39,8 @@ export class AsignaturasPage implements OnInit, OnDestroy {
     private basededatosService: BasededatosService,
     private ubi: GeocodingService,
     private loadingController: LoadingController,
-    private toastController: ToastController
+    private toastController: ToastController,
+    private alertcontroler: AlertController
   ) {}
 
   async ngOnInit() {
@@ -53,12 +55,22 @@ export class AsignaturasPage implements OnInit, OnDestroy {
       });
     await this.ObtenerUbicacion();
     this.obtenerFecha();
+    await this.basededatosService.obtenerAlumnosDeAsignatura();
   }
 
   ngOnDestroy() {
     if (this.authSubscription) {
       this.authSubscription.unsubscribe();
     }
+  }
+  async presentAlert(header: string, message: string) {
+    const alert = await this.alertcontroler.create({
+      header: header,
+      message: message,
+      buttons: ['OK'],
+    });
+
+    await alert.present();
   }
 
   async cerrarSesion() {

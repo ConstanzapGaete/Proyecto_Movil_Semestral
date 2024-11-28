@@ -15,6 +15,7 @@ import {
 export class BasededatosService {
   private db = getFirestore();
   path: string = '';
+  email: any;
 
   constructor() {}
 
@@ -35,6 +36,28 @@ export class BasededatosService {
       console.log('Documento establecido en la ruta: ', path);
     } catch (error) {
       console.error('Error al establecer documento: ', error);
+    }
+  }
+
+  async obtenerAlumnosDeAsignatura(): Promise<any> {
+    this.path = `Alumnos/alumno`;
+    const alumnosRef = doc(this.db, this.path);
+
+    try {
+      const docSnapshot = await getDoc(alumnosRef);
+
+      if (docSnapshot.exists()) {
+        const data = docSnapshot.data();
+        console.log('Datos de alumnos:', data);
+
+        return data;
+      } else {
+        console.log('No existe este documento');
+        return null;
+      }
+    } catch (error) {
+      console.error('Error al obtener alumnos:', error);
+      throw error;
     }
   }
 
@@ -59,6 +82,23 @@ export class BasededatosService {
     };
 
     try {
+      const alumnos = await this.obtenerAlumnosDeAsignatura();
+
+      if (alumnos) {
+        Object.keys(alumnos).forEach((key) => {
+          this.email = alumnos[key][0];
+          console.log(this.email);
+          claseData.estudiantes.push({
+            correo: this.email,
+            nombre: '',
+            estado: 'Ausente',
+            fecha: new Date(),
+            hora: hora,
+            ubicacionalumno: '',
+          });
+        });
+      }
+
       const docId = await this.agregarDocumento(
         claseData.asignatura,
         claseData
@@ -75,13 +115,13 @@ export class BasededatosService {
     asignatura: string,
     docId: string,
     alumnoEmail: string,
+    nombre: string,
     ubicacionalumno: string,
     hora: string,
     estado: string
   ) {
     try {
       this.path = asignatura + '/' + docId;
-      console.log(this.path);
       const docRef = doc(this.db, `${this.path}`);
       const docSnap = await getDoc(docRef);
 
@@ -89,48 +129,66 @@ export class BasededatosService {
         const claseData = docSnap.data();
         const estudiantes = claseData?.['estudiantes'] || [];
 
-        estudiantes.push({
-          email: alumnoEmail,
-          fecha: new Date(),
-          hora,
-          estado,
-          ubicacionalumno,
-        });
+        const estudianteIndex = estudiantes.findIndex(
+          (estudiante: any) => estudiante.correo === alumnoEmail
+        );
 
-        await setDoc(docRef, { estudiantes }, { merge: true });
-        console.log('Asistencia registrada con éxito');
+        if (estudianteIndex !== -1) {
+          estudiantes[estudianteIndex].estado = estado;
+          estudiantes[estudianteIndex].ubicacionalumno = ubicacionalumno;
+          estudiantes[estudianteIndex].hora = hora;
+          estudiantes[estudianteIndex].asignatura = asignatura;
+          estudiantes[estudianteIndex].nombre = nombre;
+
+          await setDoc(docRef, { estudiantes }, { merge: true });
+          console.log('Asistencia registrada con éxito');
+        } else {
+          console.log('Alumno no encontrado');
+        }
+      } else {
+        console.log('Clase no encontrada');
       }
     } catch (error) {
       console.error('Error al registrar asistencia:', error);
       throw error;
     }
   }
-  async obtenerFechasAusentes(
-    alumnoEmail: string
-  ): Promise<{ fecha: string; asignatura: string }[]> {
-    const ausencias: { fecha: string; asignatura: string }[] = [];
+
+  async obtenerFechasAusenciasPorAsignatura(
+    asignatura: string,
+    emailAlumno: string
+  ): Promise<string[]> {
+    const fechasAusencias: string[] = [];
 
     try {
-      const querySnapshot = await getDocs(collection(this.db, 'asignaturas'));
-      querySnapshot.forEach((doc) => {
+      const asignaturaRef = collection(this.db, asignatura);
+      const querySnapshot = await getDocs(asignaturaRef);
+
+      querySnapshot.docs.forEach((doc) => {
         const claseData = doc.data();
         const estudiantes = claseData['estudiantes'] || [];
 
-        estudiantes.forEach((estudiante: any) => {
-          if (
-            estudiante.email === alumnoEmail &&
-            estudiante.estado === 'ausente'
-          ) {
-            ausencias.push({
-              fecha: estudiante.fecha.toDate().toLocaleDateString(),
-              asignatura: claseData['asignatura'] || 'Desconocida',
-            });
-          }
-        });
+        const estudianteEncontrado = estudiantes.find(
+          (estudiante: any) =>
+            estudiante.correo === emailAlumno && estudiante.estado === 'Ausente'
+        );
+
+        if (estudianteEncontrado) {
+          fechasAusencias.push(claseData['fecha']);
+        }
       });
+
+      console.log(
+        `Fechas de ausencias para ${emailAlumno} en ${asignatura}:`,
+        fechasAusencias
+      );
+      return fechasAusencias;
     } catch (error) {
-      console.error('Error al obtener las fechas de ausencias:', error);
+      console.error(
+        `Error al obtener las fechas de ausencias para ${asignatura}:`,
+        error
+      );
+      throw error;
     }
-    return ausencias;
   }
 }

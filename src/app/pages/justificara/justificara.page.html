@@ -5,13 +5,12 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <div *ngIf="isLoading" style="text-align: center; margin-top: 20px;">
+  <div *ngIf="isLoading" style="text-align: center; margin-top: 20px">
     <ion-spinner name="crescent"></ion-spinner>
     <p>Cargando las ausencias...</p>
   </div>
 
   <div *ngIf="!isLoading">
-   
     <ion-accordion-group>
       <ion-accordion *ngIf="arq && arq.length > 0">
         <ion-item slot="header" color="light">
@@ -64,7 +63,7 @@
 
     <ion-grid>
       <ion-row>
-        <ion-col size="12" style="height: 150px;"></ion-col>
+        <ion-col size="12" style="height: 150px"></ion-col>
       </ion-row>
     </ion-grid>
 

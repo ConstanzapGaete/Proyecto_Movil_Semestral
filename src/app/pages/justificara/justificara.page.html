@@ -66,38 +66,6 @@
     </ion-toolbar>
   </ion-header>
 
-  <div class="centered-container">
-    <ion-label>Escribe un mensaje</ion-label>
-    <ion-textarea
-      placeholder="Escribe aquí tu justificación..."
-      [(ngModel)]="mensaje"
-    ></ion-textarea>
-  </div>
-
-  <div style="display: flex; justify-content: center; padding: 16px">
-    <ion-button
-      color="primary"
-      fill="outline"
-      expand="block"
-      (click)="subirDocumento()"
-      style="max-width: 90%"
-    >
-      <ion-icon slot="start" name="document-text-outline"></ion-icon>
-      Subir Documento
-    </ion-button>
-  </div>
-
-  <div style="display: flex; justify-content: center; padding: 16px">
-    <ion-button
-      expand="block"
-      color="primary"
-      (click)="enviar()"
-      style="width: 90%"
-    >
-      Enviar
-    </ion-button>
-  </div>
-
   <ion-fab
     vertical="bottom"
     horizontal="end"

@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
-import { CapacitorBarcodeScanner } from '@capacitor/barcode-scanner';
-import { Capacitor } from '@capacitor/core';
+import {
+  BarcodeScanner,
+  BarcodeFormat,
+} from '@capacitor-mlkit/barcode-scanning';
 
 @Injectable({
   providedIn: 'root',
@@ -9,19 +11,26 @@ export class ScanService {
   constructor() {}
 
   async Scannear() {
-    let cameraDirection = 1;
-    if (Capacitor.getPlatform() === 'web') {
-      cameraDirection = undefined;
-    }
-
     try {
-      const data = await CapacitorBarcodeScanner.scanBarcode({
-        hint: 17,
-        cameraDirection: cameraDirection,
+      // Check permissions
+      const permission = await BarcodeScanner.checkPermissions();
+      if (permission.camera !== 'granted') {
+        await BarcodeScanner.requestPermissions();
+      }
+
+      // Start scanning
+      const { barcodes } = await BarcodeScanner.scan({
+        formats: [BarcodeFormat.QrCode],
       });
-      console.log('Data', data);
-      return data.ScanResult;
+
+      if (barcodes.length > 0) {
+        console.log('Scan result:', barcodes[0].rawValue);
+        return barcodes[0].rawValue;
+      } else {
+        throw new Error('No barcode detected');
+      }
     } catch (error) {
+      console.error('Scanning error:', error);
       throw error;
     }
   }

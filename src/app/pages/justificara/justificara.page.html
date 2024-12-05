@@ -1,79 +1,81 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <div class="header-content">
-      <ion-title>Justifica tu inasistencia</ion-title>
-    </div>
+    <ion-title>Mis Inasistencias</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content id="main-content" [fullscreen]="true">
-  <div *ngIf="isLoading">
+<ion-content [fullscreen]="true">
+  <div *ngIf="isLoading" style="text-align: center; margin-top: 20px">
     <ion-spinner name="crescent"></ion-spinner>
     <p>Cargando las ausencias...</p>
   </div>
 
   <div *ngIf="!isLoading">
-    <div *ngIf="arq && arq.length > 0">
-      <h2>Arquitectura de Software</h2>
-      <ion-card *ngFor="let fecha of arq">
-        <ion-card-header>
-          <ion-card-title>Fecha Ausente</ion-card-title>
-        </ion-card-header>
-        <ion-card-content>
-          <p>Fecha: {{ fecha }}</p>
-        </ion-card-content>
-      </ion-card>
-    </div>
+    <ion-accordion-group>
+      <ion-accordion *ngIf="arq && arq.length > 0">
+        <ion-item slot="header" color="light">
+          <ion-label>Arquitectura de Software</ion-label>
+        </ion-item>
+        <div slot="content">
+          <ion-card *ngFor="let fecha of arq">
+            <ion-card-header>
+              <ion-card-title>Fecha Ausente</ion-card-title>
+            </ion-card-header>
+            <ion-card-content>
+              <p>Fecha: {{ fecha }}</p>
+            </ion-card-content>
+          </ion-card>
+        </div>
+      </ion-accordion>
 
-    <div *ngIf="cal && cal.length > 0">
-      <h2>Calidad de Software</h2>
-      <ion-card *ngFor="let fecha of cal">
-        <ion-card-header>
-          <ion-card-title>Fecha Ausente</ion-card-title>
-        </ion-card-header>
-        <ion-card-content>
-          <p>Fecha: {{ fecha }}</p>
-        </ion-card-content>
-      </ion-card>
-    </div>
+      <ion-accordion *ngIf="cal && cal.length > 0">
+        <ion-item slot="header" color="light">
+          <ion-label>Calidad de Software</ion-label>
+        </ion-item>
+        <div slot="content">
+          <ion-card *ngFor="let fecha of cal">
+            <ion-card-header>
+              <ion-card-title>Fecha Ausente</ion-card-title>
+            </ion-card-header>
+            <ion-card-content>
+              <p>Fecha: {{ fecha }}</p>
+            </ion-card-content>
+          </ion-card>
+        </div>
+      </ion-accordion>
 
-    <div *ngIf="apl && apl.length > 0">
-      <h2>Programación de Aplicaciones Móviles</h2>
-      <ion-card *ngFor="let fecha of apl">
-        <ion-card-header>
-          <ion-card-title>Fecha Ausente</ion-card-title>
-        </ion-card-header>
-        <ion-card-content>
-          <p>Fecha: {{ fecha }}</p>
-        </ion-card-content>
-      </ion-card>
-    </div>
+      <ion-accordion *ngIf="apl && apl.length > 0">
+        <ion-item slot="header" color="light">
+          <ion-label>Programación de Aplicaciones Móviles</ion-label>
+        </ion-item>
+        <div slot="content">
+          <ion-card *ngFor="let fecha of apl">
+            <ion-card-header>
+              <ion-card-title>Fecha Ausente</ion-card-title>
+            </ion-card-header>
+            <ion-card-content>
+              <p>Fecha: {{ fecha }}</p>
+            </ion-card-content>
+          </ion-card>
+        </div>
+      </ion-accordion>
+    </ion-accordion-group>
+
+    <ion-grid>
+      <ion-row>
+        <ion-col size="12" style="height: 150px"></ion-col>
+      </ion-row>
+    </ion-grid>
+
+    <ion-grid>
+      <ion-row>
+        <ion-col size="12" class="ion-text-center">
+          <ion-button expand="block" (click)="home()" color="primary">
+            <ion-icon slot="start" name="home-outline"></ion-icon>
+            Volver al Inicio
+          </ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
   </div>
-
-  <ng-template #noData>
-    <ion-card>
-      <ion-card-header>
-        <ion-card-title>No hay fechas de ausencias</ion-card-title>
-      </ion-card-header>
-      <ion-card-content>
-        <p>No hay registros de ausencias para esta asignatura.</p>
-      </ion-card-content>
-    </ion-card>
-  </ng-template>
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Justificar</ion-title>
-    </ion-toolbar>
-  </ion-header>
-
-  <ion-fab
-    vertical="bottom"
-    horizontal="end"
-    slot="fixed"
-    style="margin-bottom: 16px; margin-right: 16px"
-  >
-    <ion-fab-button (click)="home()">
-      <ion-icon name="home-outline"></ion-icon>
-    </ion-fab-button>
-  </ion-fab>
 </ion-content>

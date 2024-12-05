@@ -184,6 +184,21 @@ export class AsignaturasPage implements OnInit, OnDestroy {
     try {
       this.asignatura = idCard;
       this.siglaasignatura = codigo;
+
+      const existeClase = await this.basededatosService.existeClaseConFecha(
+        this.asignatura,
+        this.fechaa
+      );
+      if (existeClase) {
+        console.error('Ya existe una clase registrada con la misma fecha.');
+        await loading.dismiss();
+        this.presentAlert(
+          'Error al generar el codigo QR',
+          'Ya existe una clase registrada con la misma fecha.'
+        );
+        return;
+      }
+
       console.log(this.asignatura, ' ', this.siglaasignatura);
       this.MostrarqrId = idCard;
 

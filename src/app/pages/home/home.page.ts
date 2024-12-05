@@ -184,10 +184,27 @@ export class HomePage implements OnInit, OnDestroy {
     try {
       const data = await this.scan.Scannear();
       const datos = JSON.parse(data);
+
       this.id = datos.id;
       this.asingatura = datos.Asignatura;
-      console.log('Datos:', datos);
-      this.basedeatosService.registrarAsistencia(
+
+      console.log('Datos escaneados:', datos);
+
+      const fechasPresente =
+        await this.basedeatosService.fechasclasesestudiante(
+          this.asingatura,
+          this.correo
+        );
+
+      if (fechasPresente.includes(datos.fecha)) {
+        await this.presentAlert(
+          'Asistencia ya registrada',
+          'Ya has registrado tu asistencia para esta clase.'
+        );
+        return;
+      }
+
+      await this.basedeatosService.registrarAsistencia(
         this.asingatura,
         this.id,
         this.correo,
@@ -197,12 +214,7 @@ export class HomePage implements OnInit, OnDestroy {
         this.estado
       );
 
-      if (data) {
-        await this.presentAlert(
-          'Éxito',
-          'Se registró la asistencia con éxito.'
-        );
-      }
+      await this.presentAlert('Éxito', 'Se registró la asistencia con éxito.');
     } catch (error) {
       console.error('Error al escanear:', error);
       await this.presentAlert(

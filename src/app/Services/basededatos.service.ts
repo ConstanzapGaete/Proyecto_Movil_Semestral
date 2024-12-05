@@ -191,4 +191,59 @@ export class BasededatosService {
       throw error;
     }
   }
+
+  async existeClaseConFecha(
+    asignatura: string,
+    fecha: string
+  ): Promise<boolean> {
+    const asignaturaRef = collection(this.db, asignatura);
+    const snapshot = await getDocs(asignaturaRef);
+
+    let existe = false;
+    snapshot.forEach((doc) => {
+      const data = doc.data();
+      if (data['fecha'] === fecha) {
+        existe = true;
+      }
+    });
+
+    return existe;
+  }
+
+  async fechasclasesestudiante(
+    asignatura: string,
+    emailAlumno: string
+  ): Promise<string[]> {
+    const fechaclasespresente: string[] = [];
+
+    try {
+      const asignaturaRef = collection(this.db, asignatura);
+      const querySnapshot = await getDocs(asignaturaRef);
+
+      querySnapshot.docs.forEach((doc) => {
+        const claseData = doc.data();
+        const estudiantes = claseData['estudiantes'] || [];
+
+        const estudianteEncontrado = estudiantes.find(
+          (estudiante: any) =>
+            estudiante.correo === emailAlumno &&
+            estudiante.estado === 'Presente'
+        );
+
+        if (estudianteEncontrado) {
+          fechaclasespresente.push(claseData['fecha']);
+        }
+      });
+
+      console.log(
+        `Fechas de clases registradas para ${emailAlumno}:`,
+        fechaclasespresente
+      );
+
+      return fechaclasespresente;
+    } catch (error) {
+      console.error(`Error al obtener las fechas para ${asignatura}:`, error);
+      throw error;
+    }
+  }
 }

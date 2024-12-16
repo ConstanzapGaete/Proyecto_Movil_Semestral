@@ -69,59 +69,77 @@ export class HomePage implements OnInit, OnDestroy {
   }
 
   async cerrarSesion() {
-    const loading = await this.loadingController.create({
-      message: 'Cerrando sesión...',
-      spinner: 'crescent',
+    const alert = await this.alertController.create({
+      header: 'Confirmación',
+      message: '¿Estás seguro de que quieres cerrar sesión?',
+      buttons: [
+        {
+          text: 'Cancelar',
+          role: 'cancel',
+          handler: () => {
+            console.log('Cierre de sesión cancelado');
+          },
+        },
+        {
+          text: 'Cerrar sesión',
+          handler: async () => {
+            const loading = await this.loadingController.create({
+              message: 'Cerrando sesión...',
+              spinner: 'crescent',
+            });
+            await loading.present();
+  
+            try {
+              this.firebaseService.signOut().subscribe({
+                next: async () => {
+                  console.log('Sesión cerrada exitosamente');
+                  await loading.dismiss();
+  
+                  const toast = await this.toastController.create({
+                    message: 'Sesión cerrada exitosamente',
+                    duration: 2000,
+                    position: 'bottom',
+                    color: 'success',
+                  });
+                  await toast.present();
+  
+                  this.navCtrl.navigateRoot('/login', {
+                    animated: true,
+                    animationDirection: 'forward',
+                  });
+                },
+                error: async (error) => {
+                  console.error('Error al cerrar sesión:', error);
+                  await loading.dismiss();
+  
+                  const toast = await this.toastController.create({
+                    message: 'Error al cerrar sesión. Inténtalo de nuevo.',
+                    duration: 2000,
+                    position: 'bottom',
+                    color: 'danger',
+                  });
+                  await toast.present();
+                },
+              });
+            } catch (error) {
+              console.error('Error general:', error);
+              await loading.dismiss();
+  
+              const toast = await this.toastController.create({
+                message: 'Error inesperado al cerrar sesión. Inténtalo nuevamente.',
+                duration: 2000,
+                position: 'bottom',
+                color: 'danger',
+              });
+              await toast.present();
+            }
+          },
+        },
+      ],
     });
-    await loading.present();
-
-    try {
-      this.firebaseService.signOut().subscribe({
-        next: async () => {
-          console.log('Sesión cerrada exitosamente');
-
-          await loading.dismiss();
-
-          const toast = await this.toastController.create({
-            message: 'Sesión cerrada exitosamente',
-            duration: 2000,
-            position: 'bottom',
-            color: 'success',
-          });
-          await toast.present();
-
-          this.navCtrl.navigateRoot('/login', {
-            animated: true,
-            animationDirection: 'forward',
-          });
-        },
-        error: async (error) => {
-          console.error('Error al cerrar sesión:', error);
-
-          await loading.dismiss();
-          const toast = await this.toastController.create({
-            message: 'Error al cerrar sesión. Inténtalo de nuevo.',
-            duration: 2000,
-            position: 'bottom',
-            color: 'danger',
-          });
-          await toast.present();
-        },
-      });
-    } catch (error) {
-      console.error('Error al cerrar el menú:', error);
-
-      await loading.dismiss();
-      const toast = await this.toastController.create({
-        message: 'Error al cerrar sesión. Inténtalo de nuevo.',
-        duration: 2000,
-        position: 'bottom',
-        color: 'danger',
-      });
-      await toast.present();
-    }
+  
+    await alert.present();
   }
-
   async justificarAsistencia() {
     await this.menuCtrl.close();
     this.navCtrl.navigateForward('/justificara', {});

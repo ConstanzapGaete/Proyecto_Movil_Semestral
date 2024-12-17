@@ -88,13 +88,13 @@ export class HomePage implements OnInit, OnDestroy {
               spinner: 'crescent',
             });
             await loading.present();
-  
+
             try {
               this.firebaseService.signOut().subscribe({
                 next: async () => {
                   console.log('Sesión cerrada exitosamente');
                   await loading.dismiss();
-  
+
                   const toast = await this.toastController.create({
                     message: 'Sesión cerrada exitosamente',
                     duration: 2000,
@@ -102,7 +102,7 @@ export class HomePage implements OnInit, OnDestroy {
                     color: 'success',
                   });
                   await toast.present();
-  
+
                   this.navCtrl.navigateRoot('/login', {
                     animated: true,
                     animationDirection: 'forward',
@@ -111,7 +111,7 @@ export class HomePage implements OnInit, OnDestroy {
                 error: async (error) => {
                   console.error('Error al cerrar sesión:', error);
                   await loading.dismiss();
-  
+
                   const toast = await this.toastController.create({
                     message: 'Error al cerrar sesión. Inténtalo de nuevo.',
                     duration: 2000,
@@ -124,9 +124,10 @@ export class HomePage implements OnInit, OnDestroy {
             } catch (error) {
               console.error('Error general:', error);
               await loading.dismiss();
-  
+
               const toast = await this.toastController.create({
-                message: 'Error inesperado al cerrar sesión. Inténtalo nuevamente.',
+                message:
+                  'Error inesperado al cerrar sesión. Inténtalo nuevamente.',
                 duration: 2000,
                 position: 'bottom',
                 color: 'danger',
@@ -137,7 +138,7 @@ export class HomePage implements OnInit, OnDestroy {
         },
       ],
     });
-  
+
     await alert.present();
   }
   async justificarAsistencia() {
@@ -199,7 +200,14 @@ export class HomePage implements OnInit, OnDestroy {
   }
 
   async Scan() {
+    const loading = await this.loadingController.create({
+      message: 'Escaneando y registrando asistencia...',
+      spinner: 'circles',
+    });
+
     try {
+      await loading.present();
+
       const data = await this.scan.Scannear();
       const datos = JSON.parse(data);
 
@@ -215,6 +223,7 @@ export class HomePage implements OnInit, OnDestroy {
         );
 
       if (fechasPresente.includes(datos.fecha)) {
+        await loading.dismiss();
         await this.presentAlert(
           'Asistencia ya registrada',
           'Ya has registrado tu asistencia para esta clase.'
@@ -239,6 +248,8 @@ export class HomePage implements OnInit, OnDestroy {
         'Error',
         'Hubo un problema al registrar la asistencia.'
       );
+    } finally {
+      await loading.dismiss();
     }
   }
 }

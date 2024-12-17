@@ -23,6 +23,7 @@ import { firstValueFrom } from 'rxjs';
 export class LoginPage implements OnInit {
   formulario: FormGroup;
   loading: HTMLIonLoadingElement | null = null;
+  mostrarPassword: boolean = false;
 
   constructor(
     private loadingController: LoadingController,
@@ -48,6 +49,9 @@ export class LoginPage implements OnInit {
       buttons: ['OK'],
     });
     await alert.present();
+  }
+  togglePasswordVisibility() {
+    this.mostrarPassword = !this.mostrarPassword;
   }
 
   async ingresar() {

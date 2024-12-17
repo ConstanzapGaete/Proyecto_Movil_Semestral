@@ -70,26 +70,19 @@
     </div>
   </div>
 
-
-  
-
   <div class="attendance-container">
     <h2>Asistencias</h2>
     <div class="attendance-list">
-      <div class="attendance-item">
-        <span class="subject">Arquitectura</span>
-        <ion-progress-bar value="0.8"></ion-progress-bar>
-        <span class="percentage">80%</span>
-      </div>
-      <div class="attendance-item">
-        <span class="subject">Programación</span>
-        <ion-progress-bar value="0.65"></ion-progress-bar>
-        <span class="percentage">65%</span>
-      </div>
-      <div class="attendance-item">
-        <span class="subject">Religión</span>
-        <ion-progress-bar value="0.9"></ion-progress-bar>
-        <span class="percentage">90%</span>
+      <div class="attendance-item" *ngFor="let asistencia of asistencias">
+        <span class="subject">{{asistencia.asignatura}}</span>
+
+        <ion-progress-bar
+          [value]="asistencia.porcentaje/100"
+        ></ion-progress-bar>
+        <div class="attendance-details">
+          <span class="percentage">{{asistencia.porcentaje}}%</span>
+          <br /><br />
+        </div>
       </div>
     </div>
   </div>

@@ -11,6 +11,8 @@ import { Geolocation } from '@capacitor/geolocation';
 import { GeocodingService } from 'src/app/Services/geolocalizacion.service';
 import { ScanService } from 'src/app/Services/scan.service';
 import { BasededatosService } from 'src/app/Services/basededatos.service';
+import { AsistenciaAsignatura } from 'src/app/Models/asistencia-asignatura';
+import { collection, getDocs } from 'firebase/firestore';
 
 @Component({
   selector: 'app-home',
@@ -34,6 +36,7 @@ export class HomePage implements OnInit, OnDestroy {
   ubicacion: string = '';
   isScannerActive: boolean = false;
   private scan = inject(ScanService);
+  asistencias: AsistenciaAsignatura[];
   constructor(
     private navCtrl: NavController,
     private firebaseService: FirebaseService,
@@ -54,6 +57,7 @@ export class HomePage implements OnInit, OnDestroy {
       });
     await this.ObtenerUbicacion();
     this.obtenerFecha();
+    await this.obtenerClases();
   }
 
   ionViewWillEnter() {
@@ -176,6 +180,60 @@ export class HomePage implements OnInit, OnDestroy {
       this.ubicacion = await this.ubi.getLocation(this.latitud, this.longitud);
     } catch (error) {
       console.error('Error al obtener ubicación:', error);
+    }
+  }
+
+  async obtenerClases() {
+    const asignaturas = [
+      'Arquitectura de software',
+      'Programación de aplicaciones móviles',
+      'Calidad de Software',
+    ];
+    const asistenciasData: AsistenciaAsignatura[] = [];
+
+    try {
+      for (const asignatura of asignaturas) {
+        // Obtener todas las clases de la asignatura
+        const asignaturaRef = collection(this.basedeatosService.db, asignatura);
+        const querySnapshot = await getDocs(asignaturaRef);
+
+        let totalClases = 0;
+        let asistencias = 0;
+
+        querySnapshot.forEach((doc) => {
+          const claseData = doc.data();
+          totalClases++;
+
+          // Buscar al estudiante actual en la lista de estudiantes
+          const estudiante = claseData['estudiantes']?.find(
+            (est: any) => est.correo === this.correo
+          );
+
+          if (estudiante && estudiante.estado === 'Presente') {
+            asistencias++;
+          }
+        });
+
+        // Calcular el porcentaje
+        const porcentaje =
+          totalClases > 0 ? (asistencias / totalClases) * 100 : 0;
+
+        asistenciasData.push({
+          asignatura,
+          porcentaje: Math.round(porcentaje * 10) / 10, // Redondear a 1 decimal
+          totalClases,
+          asistencias,
+        });
+      }
+
+      // Actualizar el template con los datos
+      this.asistencias = asistenciasData;
+    } catch (error) {
+      console.error('Error al obtener las asistencias:', error);
+      await this.presentAlert(
+        'Error',
+        'No se pudieron cargar los datos de asistencia.'
+      );
     }
   }
 

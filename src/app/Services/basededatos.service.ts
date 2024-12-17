@@ -13,7 +13,7 @@ import {
   providedIn: 'root',
 })
 export class BasededatosService {
-  private db = getFirestore();
+  db = getFirestore();
   path: string = '';
   email: any;
 

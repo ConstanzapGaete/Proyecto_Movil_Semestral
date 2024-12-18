@@ -193,7 +193,6 @@ export class HomePage implements OnInit, OnDestroy {
 
     try {
       for (const asignatura of asignaturas) {
-        // Obtener todas las clases de la asignatura
         const asignaturaRef = collection(this.basedeatosService.db, asignatura);
         const querySnapshot = await getDocs(asignaturaRef);
 
@@ -204,7 +203,6 @@ export class HomePage implements OnInit, OnDestroy {
           const claseData = doc.data();
           totalClases++;
 
-          // Buscar al estudiante actual en la lista de estudiantes
           const estudiante = claseData['estudiantes']?.find(
             (est: any) => est.correo === this.correo
           );
@@ -214,19 +212,17 @@ export class HomePage implements OnInit, OnDestroy {
           }
         });
 
-        // Calcular el porcentaje
         const porcentaje =
           totalClases > 0 ? (asistencias / totalClases) * 100 : 0;
 
         asistenciasData.push({
           asignatura,
-          porcentaje: Math.round(porcentaje * 10) / 10, // Redondear a 1 decimal
+          porcentaje: Math.round(porcentaje * 10) / 10,
           totalClases,
           asistencias,
         });
       }
 
-      // Actualizar el template con los datos
       this.asistencias = asistenciasData;
     } catch (error) {
       console.error('Error al obtener las asistencias:', error);
